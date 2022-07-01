@@ -1,0 +1,15 @@
+{% extends "Front/base.html.twig" %}
+
+{% block title %}Erreur{% endblock %}
+
+{% block body %}
+    <h1>Une erreur est survenue</h1>
+    <h3>{{ msgError }}</h3>
+    <p>In {{ file }} at line {{ line }}</p>
+
+    <ol>
+        {% for trace in traces %}
+            <li>In {{ trace.file }}({{ trace.line }}): {{ trace.class }}{{ trace.type }}{{ trace.function }}</li>
+        {% endfor %}
+    </ol>
+{% endblock %}

@@ -1,0 +1,14 @@
+{
+    "name": "ttexier/blog-php",
+    "description": "Développeur PHP/Symfony - Projet 5",
+    "autoload": {
+        "psr-4": {
+            "Texier\\Framework\\" : "Framework/",
+            "App\\Model\\Entity\\" : "Model/Entity/",
+            "App\\Model\\Manager\\" : "Model/Manager/"
+        }
+    },
+    "require": {
+        "twig/twig": "^3.4"
+    }
+}
