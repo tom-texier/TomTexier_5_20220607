@@ -7,6 +7,9 @@ use Twig\Loader\FilesystemLoader;
 
 class Router
 {
+    const DEFAULT_CONTROLLER = 'Home';
+    const DEFAULT_ACTION = 'index';
+
     public function routingRequest()
     {
         $request = new Request($_REQUEST);
@@ -19,7 +22,7 @@ class Router
 
     private function createController(Request $request)
     {
-        $controller = 'Home'; // Default Controller
+        $controller = self::DEFAULT_CONTROLLER;
 
         $rootWeb = Configuration::get('rootWeb');
 
@@ -46,7 +49,7 @@ class Router
 
     private function createAction(Request $request)
     {
-        $action = "index"; // Default Action
+        $action = self::DEFAULT_ACTION;
 
         if($request->existsParam('action')) {
             $action = $request->getParam('action');
