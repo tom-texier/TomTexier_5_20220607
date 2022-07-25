@@ -22,10 +22,9 @@ class Request
     {
         if ($this->existsParam($name)) {
 			return htmlspecialchars($this->params[$name]);
-		}
-		else {
-			throw new \Exception("Paramètre '$name' absent de la requête");
-		}
+        }
+        
+        return false;
     }
 
     public function getSession()

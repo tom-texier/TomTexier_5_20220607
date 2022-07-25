@@ -32,13 +32,27 @@ abstract class Controller
         $controller = str_replace("Controller", "", $classController);
         $path = Configuration::get('rootWeb') . 'Views/Front';
 
+        if($error_message = $this->request->getSession()->getAttribute('error_message')) {
+            $dataView['error_message'] = $error_message;
+            $this->request->getSession()->removeAttribute('error_message');
+        }
+
         $view = new View($path, $this->action, $controller);
         $view->generate($dataView);
     }
 
-    protected function redirect($controller, $action = null)
+    protected function redirect($controller, $action = null, $messages = [])
     {
+        if(!empty($messages['error'])) {
+            $this->request->getSession()->setAttribute('error_message', $messages['error']);
+        }
+
+        if(!empty($messages['success'])) {
+            $this->request->getSession()->setAttribute('success_message', $messages['success']);
+        }
+
         $rootWeb = Configuration::get("rootWeb", "/");
         header("Location:" . $rootWeb . $controller . "/" . $action);
+        exit();
     }
 }

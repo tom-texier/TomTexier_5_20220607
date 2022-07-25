@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Connexion</h1>
+    <form id="form__login" class="form" method="POST" action="/login/login">
+        <div class="form__group">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required />
+        </div>
+        <div class="form__group">
+            <label for="password">Mot de passe</label>
+            <input id="password" type="password" name="password" required />
+        </div>
+        <div class="form__group">
+            <button>Se connecter</button>
+        </div>
+    </form>
+    <a href="/registration">Je n'ai pas de compte ! S'inscrire</a>
+</div>
+{% endblock %}
