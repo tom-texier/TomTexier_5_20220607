@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="container">
+    <form id="form__login" class="form" method="POST" action="/login/login">
+        {% if success_message %}
+            <div class="notice notice__success">
+                {{ success_message }}
+            </div>
+        {% endif %}
+        {% if error_message %}
+            <div class="notice notice__error">
+                {{ error_message }}
+            </div>
+        {% endif %}
+        <h1>Connexion</h1>
+        <div class="form__group">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required />
+        </div>
+        <div class="form__group">
+            <label for="password">Mot de passe</label>
+            <input id="password" type="password" name="password" required />
+        </div>
+        <div class="form__group">
+            <button>Se connecter</button>
+        </div>
+        <a href="/registration">Je n'ai pas de compte ! S'inscrire</a>
+    </form>
+</div>
+{% endblock %}

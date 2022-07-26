@@ -3,6 +3,7 @@
 namespace Texier\Framework;
 
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 class View
@@ -20,7 +21,10 @@ class View
         }
 
         $this->loader = new FilesystemLoader($path);
-        $this->twig = new Environment($this->loader);
+        $this->twig = new Environment($this->loader, [
+            'debug' => true
+        ]);
+        $this->twig->addExtension(new DebugExtension());
 
         $path = "";
 
@@ -32,6 +36,7 @@ class View
 
     public function generate(array $data)
     {
+        $this->twig->addGlobal('session', $_SESSION);
         $this->twig->display($this->file, $data);
     }
 }

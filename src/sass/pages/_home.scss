@@ -1,0 +1,32 @@
+.home {
+    #home-presentation {
+        margin-top: -50px;
+        
+        h2 {
+            font-size: 50px;
+            font-weight: 400;
+            text-align: right;
+            margin: 0;
+        }
+
+        .row {
+            display: flex;
+
+            .profil {
+                margin-right: 30px;
+                
+                img {
+                    object-fit: cover;
+                    width: 300px;
+                    height: 300px;
+                    border-radius: 50%;
+                    border: 5px solid $accent-color;
+                }
+            }
+
+            .texte {
+                text-align: right;
+            }
+        }
+    }
+}

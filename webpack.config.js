@@ -22,7 +22,7 @@ let config = {
             directory: path.join(__dirname, 'public/assets'),
             publicPath: '/serve-public-path-url',
         },
-        port: 3032,
+        port: 3030,
         allowedHosts: 'all',
         headers: {
             "Access-Control-Allow-Origin": "*",

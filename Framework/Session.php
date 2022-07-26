@@ -26,9 +26,13 @@ class Session
         if ($this->existsAttribute($name)) {
             return $_SESSION[$name];
         }
-        else {
-            throw new \Exception("Attribut '$name' absent de la session");
-        }
+        
+        return false;
+    }
+
+    public function removeAttribute(string $name)
+    {
+        unset($_SESSION[$name]);
     }
 
     public function existsAttribute(string $name): bool

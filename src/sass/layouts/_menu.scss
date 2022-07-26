@@ -1,0 +1,52 @@
+#sideMenu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 400px;
+    max-width: 100%;
+    transform: translateX(100%);
+    transition: transform .4s ease;
+    z-index: 99;
+    background-color: #fff;
+    padding-top: 70px;
+
+    &.open {
+        transform: translateX(0);
+        box-shadow: -5px 0 10px -5px rgba(0, 0, 0, .5);
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: #000;
+        font-size: 40px;
+        cursor: pointer;
+        transition: .4s ease;
+
+        &:hover {
+            color: $accent-color;
+        }
+    }
+
+    .main-menu {
+        list-style-type: none;
+        padding: 0 20px;
+
+        a {
+            display: block;
+            padding: 10px;
+            color: $text-color;
+            text-decoration: none;
+        }
+    }
+
+    .login-menu {
+        margin: auto;
+        width: calc(100% - 40px);
+        border-top: 1px solid #ececec;
+        padding-top: 20px;
+    }
+
+}
