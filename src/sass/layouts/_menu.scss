@@ -29,4 +29,24 @@
             color: $accent-color;
         }
     }
+
+    .main-menu {
+        list-style-type: none;
+        padding: 0 20px;
+
+        a {
+            display: block;
+            padding: 10px;
+            color: $text-color;
+            text-decoration: none;
+        }
+    }
+
+    .login-menu {
+        margin: auto;
+        width: calc(100% - 40px);
+        border-top: 1px solid #ececec;
+        padding-top: 20px;
+    }
+
 }

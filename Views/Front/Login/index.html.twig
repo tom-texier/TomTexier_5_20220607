@@ -4,8 +4,18 @@
 
 {% block body %}
 <div class="container">
-    <h1>Connexion</h1>
     <form id="form__login" class="form" method="POST" action="/login/login">
+        {% if success_message %}
+            <div class="notice notice__success">
+                {{ success_message }}
+            </div>
+        {% endif %}
+        {% if error_message %}
+            <div class="notice notice__error">
+                {{ error_message }}
+            </div>
+        {% endif %}
+        <h1>Connexion</h1>
         <div class="form__group">
             <label for="email">Email</label>
             <input id="email" type="email" name="email" required />
@@ -17,7 +27,7 @@
         <div class="form__group">
             <button>Se connecter</button>
         </div>
+        <a href="/registration">Je n'ai pas de compte ! S'inscrire</a>
     </form>
-    <a href="/registration">Je n'ai pas de compte ! S'inscrire</a>
 </div>
 {% endblock %}

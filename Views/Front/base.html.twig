@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}Accueil{% endblock %} - Mon blog</title>
-    <link rel="stylesheet" href="http://localhost:3030/css/blog_php.css">
+    <link rel="stylesheet" href="/assets/css/blog_php.css">
 </head>
 <body class="{% block class_body %}{% endblock %}">
     <header id="main-header">
@@ -22,21 +22,37 @@
 
         <nav id="sideMenu">
             <div class="close">&times;</div>
-            <ul>
+            <ul class="main-menu">
                 <li><a href="/">Accueil</a></li>
                 <li><a href="#">Mes articles</a></li>
                 <li><a href="#">Contactez-moi</a></li>
-                <li><a href="/login">Connexion</a></li>
             </ul>
+
+            <div class="login-menu">
+                {% if not session.userID %}
+                    <a class="button login" href="/login">Connexion</a>
+                {% else %}
+                    <div class="email">{{ session.userEmail }}</div>
+                    {% if session.userRole == 2 %}
+                        <ul>
+                            <li><a href="/admin">Console d'administration</a></li>
+                            <li><a href="/admin">Gérer les posts</a></li>
+                            <li><a href="/admin">Gérer les commentaires</a></li>
+                            <li><a href="/admin">Gérer les utilisateurs</a></li>
+                        </ul>
+                    {% endif %}
+                    <a class="button logout" href="/login/logout">Déconnexion</a>
+                {% endif %}
+            </div>
         </nav>
     </header>
 
     {% block body %}{% endblock %}
 
     <footer>
-    
+        {{ dump() }}
     </footer>
 
-    <script src="http://localhost:3030/js/blog_php.js"></script>
+    <script src="/assets/js/blog_php.js"></script>
 </body>
 </html>

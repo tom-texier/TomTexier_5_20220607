@@ -3,10 +3,14 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-{{ error_message }}
 <div class="container">
-    <h1>Inscription</h1>
     <form id="form__login" class="form" method="POST" action="/registration/register">
+        {% if error_message %}
+            <div class="notice notice__error">
+                {{ error_message }}
+            </div>
+        {% endif %}
+        <h1>Inscription</h1>
         <div class="form__group w-50">
             <label for="username">Nom d'utilisateur</label>
             <input id="username" type="text" name="username" required />
@@ -26,7 +30,7 @@
         <div class="form__group">
             <button>S'inscrire</button>
         </div>
+        <a href="/login">J'ai déjà un compte ! Se connecter</a>
     </form>
-    <a href="/login">J'ai déjà un compte ! Se connecter</a>
 </div>
 {% endblock %}

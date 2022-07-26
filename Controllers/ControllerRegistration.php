@@ -16,6 +16,10 @@ class ControllerRegistration extends Controller
 
     public function index()
     {
+        if($this->request->getSession()->existsAttribute('userID')) {
+            $this->redirect();
+        }
+
         $this->generateView();
     }
 
@@ -65,7 +69,9 @@ class ControllerRegistration extends Controller
                 $this->redirect('registration', null, $result);
             }
             else {
-                $this->redirect('login', null, $result);
+                $this->redirect('login', null, [
+                    'success' => 'Votre inscription a bien été prise en compte. Vous pouvez maintenant vous connecter.'
+                ]);
             }
         }
     }

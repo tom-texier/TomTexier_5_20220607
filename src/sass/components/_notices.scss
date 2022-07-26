@@ -1,0 +1,17 @@
+.notice {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid;
+  font-size: 15px;
+
+  &__error {
+    border-color: red;
+    color: red;
+  }
+
+  &__success {
+    border-color: green;
+    color: green;
+  }
+}

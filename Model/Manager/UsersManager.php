@@ -13,29 +13,33 @@ class UsersManager extends Model
 
     }
 
-    public function get($id): User
+    /**
+     * @param int|string $id id, email or username of User
+     * @return User|false
+     */
+    public function get($id)
     {
-        $sql = "SELECT * FROM users WHERE id = :id OR username = :id OR email = :id";
+        $sql = "SELECT * FROM users WHERE id = :id OR username = :username OR email = :email";
         
         $user = $this->executeRequest($sql, [
-            ':id'    => $id
+            ':id'       => $id,
+            ':username' => $id,
+            ':email'    => $id,
         ]);
 
         if($user->rowCount() == 1) {
             $datas = $user->fetch(PDO::FETCH_ASSOC);
             $user = new User($datas);
+
             return $user;
         }
-        else {
-            return false;
-        }
+
+        return false;
     }
 
     public function add(User $user)
     {
-        $verif = $this->get($user->getUsername());
-
-        if($verif) {
+        if($this->get($user->getUsername())) {
             return ['error' => 'Un utilisateur existe déjà avec ce nom d\'utilisateur.'];
         }
 
@@ -43,17 +47,17 @@ class UsersManager extends Model
             return ['error' => 'Un utilisateur existe déjà avec cette adresse email.'];
         }
 
-        $sql = "INSERT INTO users (username, email, password, role, createdAt) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (username, email, password, role, createdAt) VALUES (:username, :email, :password, :role, :createdAt)";
 
         $this->executeRequest($sql, [
-            $user->getUsername(),
-            $user->getEmail(),
-            $user->getPassword(),
-            $user->getRole(),
-            $user->getCreatedAt()->format('Y-m-d H:i:s')
+            ':username'     => $user->getUsername(),
+            ':email'        => $user->getEmail(),
+            ':password'     => $user->getPassword(),
+            ':role'         => $user->getRole(),
+            ':createdAt'    => $user->getCreatedAt()->format('Y-m-d H:i:s')
         ]);
 
-        return ['success' => 'Votre inscription a bien été prise en compte. Veuillez vous connecter.'];
+        return true;
     }
 
     public function delete(int $id)
@@ -64,5 +68,22 @@ class UsersManager extends Model
     public function update(User $user)
     {
         
+    }
+
+    /**
+     * @param $email
+     * @param $password
+     * @return bool
+     */
+    public function login($email, $password): bool
+    {
+        $sql = "SELECT password FROM users WHERE email = ?";
+        $user = $this->executeRequest($sql, [$email]);
+        if($user->rowCount() == 1) {
+            $user = $user->fetch(PDO::FETCH_ASSOC);
+            return password_verify($password, $user['password']);
+        }
+
+        return false;
     }
 }
