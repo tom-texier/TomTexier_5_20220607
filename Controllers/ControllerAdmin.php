@@ -23,6 +23,8 @@ class ControllerAdmin extends ControllerSecured
         $this->generateView();
     }
 
+    //======================== Gestion des posts ======================
+
     public function postsManagement()
     {
         $numberPosts = $this->postsManager->count();
@@ -32,5 +34,19 @@ class ControllerAdmin extends ControllerSecured
             'posts'         => $posts,
             'numberPosts'   => $numberPosts
         ]);
+    }
+
+    public function addPost()
+    {
+        if(
+            $this->request->existsParam('title') &&
+            $this->request->existsParam('content') &&
+            $this->request->existsParam('image')
+        ) {
+
+        }
+        else {
+            $this->generateView();
+        }
     }
 }
