@@ -6,12 +6,20 @@
   font-size: 15px;
 
   &__error {
-    border-color: red;
-    color: red;
+    border-color: #B91919;
+    color: #B91919;
+    background-color: rgba(185, 25, 25, .1)
   }
 
   &__success {
-    border-color: green;
-    color: green;
+    border-color: #6AA84F;
+    color: #6AA84F;
+    background-color: rgba(106,168,79, .1);
+  }
+
+  &__info {
+    border-color: #3D85C6;
+    color: #3D85C6;
+    background-color: rgba(61,133,198, .1);
   }
 }
