@@ -65,4 +65,8 @@
       background-color: $accent-color;
     }
   }
+
+  span.required {
+    color: red;
+  }
 }

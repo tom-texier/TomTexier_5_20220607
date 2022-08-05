@@ -3,19 +3,25 @@
 {% block container %}
     <h1>Ajouter un article</h1>
 
-    <form method="post" action="/admin/addPost" class="form-action">
+    {% if error_message %}
+        <div class="notice notice__error">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
+    <form method="post" action="/admin/addPost" class="form-action" enctype="multipart/form-data">
         <div class="form-group form-group__title">
-            <label for="title">Titre</label>
-            <input type="text" name="title" id="title">
+            <label for="title">Titre<span class="required">*</span></label>
+            <input type="text" name="title" id="title" required>
         </div>
         <div class="form-group form-group__image">
             <label for="image"><i class="fas fa-upload"></i> Importer une image</label>
             <input type="file" name="image" id="image">
         </div>
         <div class="form-group form-group__content">
-            <label for="content">Contenu</label>
-            <textarea id="content" name="content"></textarea>
+            <label for="content">Contenu<span class="required">*</span></label>
+            <textarea id="content" name="content" required></textarea>
         </div>
-        <input type="submit" value="Ajouter" class="submit">
+        <input type="submit" value="Ajouter" class="submit" name="submit">
     </form>
 {% endblock %}
