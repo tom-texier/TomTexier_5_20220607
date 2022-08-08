@@ -189,6 +189,22 @@ class ControllerAdmin extends ControllerSecured
         $this->redirect('admin', 'usersManagement', ['success' => 'Utilisateur supprimé.']);
     }
 
+    public function addUser()
+    {
+        if(
+            $this->request->existsParam('username') ||
+            $this->request->existsParam('email') ||
+            $this->request->existsParam('password') ||
+            $this->request->existsParam('confirm_password') ||
+            $this->request->existsParam('role')
+        ) {
+
+        }
+        else {
+            $this->generateView();
+        }
+    }
+
     /**
      * @param $file
      * @return string|string[]
