@@ -3,6 +3,17 @@
 {% block container %}
     <h1>Liste des articles</h1>
 
+    {% if error_message %}
+        <div class="notice notice__error">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    {% if success_message %}
+        <div class="notice notice__success">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
     {% if not posts %}
         <div class="notice notice__info">
             Aucun article trouvé
@@ -14,7 +25,6 @@
                     <div class="cell">Identifiant</div>
                     <div class="cell">Titre</div>
                     <div class="cell">Créé le</div>
-                    <div class="cell">Auteur</div>
                     <div class="cell">Dernière modification</div>
                     <div class="cell"></div>
                 </div>
@@ -24,9 +34,8 @@
                     <div class="row">
                         <div class="cell">#{{ post.id }}</div>
                         <div class="cell">{{ post.title }}</div>
-                        <div class="cell">{{ post.createdAt }}</div>
-                        <div class="cell">{{ post.username }} <span class="info">({{ post.email }})</span></div>
-                        <div class="cell">{{ post.updatedAt }}</div>
+                        <div class="cell">{{ post.createdAt|date("d/m/Y à H:i") }}</div>
+                        <div class="cell">{{ post.updatedAt ? post.updatedAt|date("\\l\\e d/m/Y à H:i") : '' }}</div>
                         <div class="cell">
                             <div class="actions">
                                 <a href="/post/index/{{ post.id }}" target="_blank" title="Voir l'article"><i class="fas fa-eye"></i></a>

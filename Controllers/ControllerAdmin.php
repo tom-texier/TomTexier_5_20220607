@@ -1,5 +1,6 @@
 <?php
 
+use App\Model\Entity\Post;
 use App\Model\Manager\CommentsManager;
 use App\Model\Manager\PostsManager;
 use App\Model\Manager\UsersManager;
@@ -39,25 +40,45 @@ class ControllerAdmin extends ControllerSecured
     public function addPost()
     {
         if (
-            $this->request->existsParam('title') ||
-            $this->request->existsParam('content') ||
-            $this->request->existsParam('image') ||
+            $this->request->existsParam('title') &&
+            $this->request->existsParam('content') &&
             $this->request->existsParam('submit')
         ) {
             $title = $this->request->getParam('title');
             $content = $this->request->getParam('content');
-            $image = $_FILES['image'] ?? false;
+            $image = !empty($_FILES['image']['tmp_name']) ? $_FILES['image'] : false;
             $authorId = $this->request->getSession()->getAttribute('userID');
 
             if (empty($title) || empty($content)) {
-                $this->redirect('admin', 'addPost', ['error' => 'Vous devez renseigner, au minimum, un titre et un contenu.']);
+                $this->redirect('admin', 'addPost', ['error' => 'Vous devez renseigner le titre et le contenu de votre article.']);
             }
 
-            $result = $this->uploadFile($image);
-
-            if(isset($result['error'])) {
-                $this->redirect('admin', 'addPost', $result);
+            if (!$image) {
+                $this->redirect('admin', 'addPost', ['error' => 'Vous devez renseigner l\'image de votre article.']);
             }
+            else {
+                $imageName = $this->uploadFile($image);
+            }
+
+            if(isset($imageName['error'])) {
+                $this->redirect('admin', 'addPost', $imageName);
+            }
+
+            $post = new Post([
+                'title'     => $title,
+                'content'   => $content,
+                'image'     => $imageName,
+                'userID'    => $authorId,
+                'createdAt' => new DateTime(),
+                'updatedAt' => new DateTime()
+            ]);
+
+            $result = $this->postsManager->add($post);
+
+            if(!$result)
+                $this->redirect('admin', 'addPost', ['error' => 'Une erreur est survenue. Impossible de créer cet article.']);
+
+            $this->redirect('admin', 'postsManagement', ['success' => 'Votre article a bien été créé.']);
 
         }
         else {
@@ -82,7 +103,7 @@ class ControllerAdmin extends ControllerSecured
             return ['error' => "Ce type de fichier n'est pas pris en charge."];
         }
         elseif($file['size'] > $max_file_size) {
-            return ['error' => "Ce fichier est trop volumineux. Essayez de le compresser."];
+            return ['error' => "Ce fichier est trop volumineux. Essayez de le compresser. (Max. 2Mo)"];
         }
         elseif($file['error'] != 0) {
             return ['error' => "Une erreur est survenue."];
