@@ -10,7 +10,18 @@ class UsersManager extends Model
 {
     public function getList(): array
     {
+        $sql = "SELECT id, username, email, role, createdAt
+                FROM users
+                ORDER BY createdAt DESC";
 
+        $result = $this->executeRequest($sql);
+        $users = [];
+
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $users[] = new User($row);
+        }
+
+        return $users;
     }
 
     /**
@@ -39,12 +50,8 @@ class UsersManager extends Model
 
     public function add(User $user)
     {
-        if($this->get($user->getUsername())) {
-            return ['error' => 'Un utilisateur existe déjà avec ce nom d\'utilisateur.'];
-        }
-
-        if($this->get($user->getEmail())) {
-            return ['error' => 'Un utilisateur existe déjà avec cette adresse email.'];
+        if($result = $this->userExist($user)) {
+            return $result;
         }
 
         $sql = "INSERT INTO users (username, email, password, role, createdAt) VALUES (:username, :email, :password, :role, :createdAt)";
@@ -62,12 +69,23 @@ class UsersManager extends Model
 
     public function delete(int $id)
     {
+        $sql = "DELETE FROM users WHERE id = ?";
 
+        return $this->executeRequest($sql, [$id]);
     }
 
     public function update(User $user)
     {
-        
+        $sql = "UPDATE users
+                SET username = :username, email = :email, role = :role
+                WHERE id = :id";
+
+        return $this->executeRequest($sql, [
+            ':username' => $user->getUsername(),
+            ':email' => $user->getEmail(),
+            ':role' => $user->getRole(),
+            ':id' => $user->getId()
+        ]);
     }
 
     /**
@@ -83,6 +101,27 @@ class UsersManager extends Model
             $user = $user->fetch(PDO::FETCH_ASSOC);
             return password_verify($password, $user['password']);
         }
+
+        return false;
+    }
+
+    public function count()
+    {
+        $sql = "SELECT COUNT(*) as numberUsers FROM users";
+        $result = $this->executeRequest($sql)->fetch();
+
+        return $result['numberUsers'];
+    }
+
+    private function userExist(User $user)
+    {
+        $result = $this->get($user->getUsername());
+        if($result)
+            return ['error' => 'Un utilisateur existe déjà avec ce nom d\'utilisateur.'];
+
+        $result = $this->get($user->getEmail());
+        if($result)
+            return ['error' => 'Un utilisateur existe déjà avec cette adresse email.'];
 
         return false;
     }

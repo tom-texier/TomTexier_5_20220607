@@ -146,7 +146,7 @@ class ControllerAdmin extends ControllerSecured
     public function deletePost()
     {
         if(!$this->request->existsParam('id'))
-            $this->redirect('admin', 'postsManagement', ['error' => 'Sélectionnez un article à supprimer.']);
+            $this->redirect('admin', 'postsManagement');
 
         $postId = intval($this->request->getParam('id'));
         $post = $this->postsManager->get($postId);
@@ -154,10 +154,39 @@ class ControllerAdmin extends ControllerSecured
         $result = $this->postsManager->delete($postId);
 
         if(!$result)
-            $this->redirect('admin', 'postsManagement', ['error' => 'Une erreur est survenue. Impossible de supprimer cet article.'], $postId);
+            $this->redirect('admin', 'postsManagement', ['error' => 'Une erreur est survenue. Impossible de supprimer cet article.']);
 
         $this->deleteFile($post->getImage());
-        $this->redirect('admin', 'postsManagement', ['success' => 'Article supprimé.'], $postId);
+        $this->redirect('admin', 'postsManagement', ['success' => 'Article supprimé.']);
+    }
+
+    //======================== Gestion des utilisateurs ======================
+
+    public function usersManagement()
+    {
+        $numberUsers = $this->usersManager->count();
+        $users = $this->usersManager->getList();
+
+        $this->generateView([
+            'users' => $users,
+            'numberUsers' => $numberUsers
+        ]);
+    }
+
+    public function deleteUser()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'usersManagement');
+
+        $userId = intval($this->request->getParam('id'));
+        $user = $this->usersManager->get($userId);
+
+        $result = $this->usersManager->delete($userId);
+
+        if(!$result)
+            $this->redirect('admin', 'usersManagement', ['error' => 'Une erreur est survenue. Impossible de supprimer cet utilisateur.']);
+
+        $this->redirect('admin', 'usersManagement', ['success' => 'Utilisateur supprimé.']);
     }
 
     /**
