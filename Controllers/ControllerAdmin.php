@@ -143,6 +143,23 @@ class ControllerAdmin extends ControllerSecured
         }
     }
 
+    public function deletePost()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'postsManagement', ['error' => 'Sélectionnez un article à supprimer.']);
+
+        $postId = intval($this->request->getParam('id'));
+        $post = $this->postsManager->get($postId);
+
+        $result = $this->postsManager->delete($postId);
+
+        if(!$result)
+            $this->redirect('admin', 'postsManagement', ['error' => 'Une erreur est survenue. Impossible de supprimer cet article.'], $postId);
+
+        $this->deleteFile($post->getImage());
+        $this->redirect('admin', 'postsManagement', ['success' => 'Article supprimé.'], $postId);
+    }
+
     /**
      * @param $file
      * @return string|string[]

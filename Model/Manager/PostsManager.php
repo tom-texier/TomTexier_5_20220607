@@ -65,7 +65,9 @@ class PostsManager extends Model
 
     public function delete(int $id)
     {
+        $sql = "DELETE FROM posts WHERE id = ?";
 
+        return $this->executeRequest($sql, [$id]);
     }
 
     public function update(Post $post)
