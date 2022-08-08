@@ -7,7 +7,7 @@ use Texier\Framework\Entity;
 class Post extends Entity
 {
     private int $id;
-    private int $userID;
+    private int $authorId;
     private string $title;
     private string $content;
     private string $image;
@@ -25,9 +25,9 @@ class Post extends Entity
     /**
      * @return int
      */
-    public function getUserID(): int
+    public function getAuthorId(): int
     {
-        return $this->userID;
+        return $this->authorId;
     }
 
     /**
@@ -86,12 +86,12 @@ class Post extends Entity
      * @param $userID
      * @return void
      */
-    public function setUserID($userID)
+    public function setAuthorId($authorId)
     {
-        if(!is_int($userID)) {
-            $userID = intval($userID);
+        if(!is_int($authorId)) {
+            $authorId = intval($authorId);
         }
-        $this->userID = $userID;
+        $this->authorId = $authorId;
     }
 
     /**

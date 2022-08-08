@@ -23,7 +23,7 @@ try {
     $router->routingRequest();
 }
 catch(\Exception $exception) {
-    $loader = new FilesystemLoader(Configuration::get('rootWeb') . 'Views');
+    $loader = new FilesystemLoader(Configuration::get('rootPath') . 'Views');
     $twig = new Environment($loader);
     $twig->display('error.html.twig', [
         'msgError'  => $exception->getMessage(),

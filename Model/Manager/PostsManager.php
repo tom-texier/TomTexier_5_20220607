@@ -20,16 +20,30 @@ class PostsManager extends Model
         $result = $this->executeRequest($sql);
         $posts = [];
 
-        while($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
             $posts[] = new Post($row);
         }
 
         return $posts;
     }
 
-    public function get(int $id): Post
+    /**
+     * @param int $id
+     * @return Post|false
+     */
+    public function get(int $id)
     {
+        $sql = "SELECT * FROM posts WHERE id = ?";
 
+        $post = $this->executeRequest($sql, [$id]);
+
+        if ($post->rowCount() == 1) {
+            $datas = $post->fetch(\PDO::FETCH_ASSOC);
+
+            return new Post($datas);
+        }
+
+        return false;
     }
 
     /**
@@ -39,15 +53,14 @@ class PostsManager extends Model
     public function add(Post $post)
     {
         $sql = "INSERT INTO posts (authorId, title, content, image, createdAt) VALUES (:authorId, :title, :content, :image, :createdAt)";
-        $result = $this->executeRequest($sql, [
-            ':authorId'     => $post->getUserID(),
-            ':title'        => $post->getTitle(),
-            ':content'      => $post->getContent(),
-            ':image'        => $post->getImage(),
-            ':createdAt'    => $post->getCreatedAt()->format('Y-m-d H:i:s')
-        ]);
 
-        return $result;
+        return $this->executeRequest($sql, [
+            ':authorId' => $post->getAuthorId(),
+            ':title' => $post->getTitle(),
+            ':content' => $post->getContent(),
+            ':image' => $post->getImage(),
+            ':createdAt' => $post->getCreatedAt()->format('Y-m-d H:i:s')
+        ]);
     }
 
     public function delete(int $id)
@@ -57,7 +70,17 @@ class PostsManager extends Model
 
     public function update(Post $post)
     {
-        
+        $sql = "UPDATE posts
+                SET title = :title, image = :image, content = :content, updatedAt = :updatedAt
+                WHERE id = :id";
+
+        return $this->executeRequest($sql, [
+            ':title' => $post->getTitle(),
+            ':image' => $post->getImage(),
+            ':content' => $post->getContent(),
+            ':updatedAt' => $post->getUpdatedAt()->format('Y-m-d H:i:s'),
+            ':id' => $post->getId()
+        ]);
     }
 
     public function count()

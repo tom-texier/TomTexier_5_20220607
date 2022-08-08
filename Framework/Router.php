@@ -24,7 +24,7 @@ class Router
     {
         $controller = self::DEFAULT_CONTROLLER;
 
-        $rootWeb = Configuration::get('rootWeb');
+        $rootWeb = Configuration::get('rootPath');
 
         if($request->existsParam('controller')) {
             $controller = $request->getParam('controller');

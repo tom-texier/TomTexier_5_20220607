@@ -11,7 +11,7 @@ class Comment extends Entity
     const VALIDATED = 2;
 
     private int $id;
-    private int $userID;
+    private int $authorId;
     private int $postID;
     private string $content;
     private \DateTime $createdAt;
@@ -22,9 +22,9 @@ class Comment extends Entity
         return $this->id;
     }
 
-    public function getUserID()
+    public function getAuthorId()
     {
-        return $this->userID;
+        return $this->authorId;
     }
 
     public function getPostID()
@@ -52,9 +52,9 @@ class Comment extends Entity
         $this->id = $id;
     }
 
-    public function setUserID(int $userID)
+    public function setAuthorId(int $authorId)
     {
-        $this->userID = $userID;
+        $this->authorId = $authorId;
     }
 
     public function setPostID(int $postID)

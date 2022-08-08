@@ -40,8 +40,8 @@ class ControllerAdmin extends ControllerSecured
     public function addPost()
     {
         if (
-            $this->request->existsParam('title') &&
-            $this->request->existsParam('content') &&
+            $this->request->existsParam('title') ||
+            $this->request->existsParam('content') ||
             $this->request->existsParam('submit')
         ) {
             $title = $this->request->getParam('title');
@@ -50,7 +50,7 @@ class ControllerAdmin extends ControllerSecured
             $authorId = $this->request->getSession()->getAttribute('userID');
 
             if (empty($title) || empty($content)) {
-                $this->redirect('admin', 'addPost', ['error' => 'Vous devez renseigner le titre et le contenu de votre article.']);
+                $this->redirect('admin', 'addPost', ['error' => 'Vous devez renseigner tous les champs du formulaire.']);
             }
 
             if (!$image) {
@@ -87,6 +87,63 @@ class ControllerAdmin extends ControllerSecured
     }
 
     /**
+     * @throws Exception
+     */
+    public function editPost()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'postsManagement', ['error' => 'Sélectionnez un article à modifier.']);
+
+        $postId = intval($this->request->getParam('id'));
+        $post = $this->postsManager->get($postId);
+
+        if(!$post) {
+            $this->redirect('admin', 'addPost', ['error' => 'Cet article n\'existe pas, veuillez le créer grâce au formulaire ci-dessous.']);
+        }
+
+        if (
+            $this->request->existsParam('title') ||
+            $this->request->existsParam('content') ||
+            $this->request->existsParam('submit')
+        ) {
+            $title = $this->request->getParam('title');
+            $content = $this->request->getParam('content');
+            $image = !empty($_FILES['image']['tmp_name']) ? $_FILES['image'] : false;
+
+            if (empty($title) || empty($content)) {
+                $this->redirect('admin', 'editPost', ['error' => 'Vous devez renseigner tous les champs du formulaire.'], $postId);
+            }
+
+            if ($image) {
+                $this->deleteFile($post->getImage());
+                $imageName = $this->uploadFile($image);
+
+                if(isset($imageName['error'])) {
+                    $this->redirect('admin', 'addPost', $imageName);
+                }
+
+                $post->setImage($imageName);
+            }
+
+            $post->setTitle($title);
+            $post->setContent($content);
+            $post->setUpdatedAt(new DateTime());
+
+            $result = $this->postsManager->update($post);
+
+            if(!$result)
+                $this->redirect('admin', 'editPost', ['error' => 'Une erreur est survenue. Impossible de modifier cet article.'], $postId);
+
+            $this->redirect('admin', 'editPost', ['success' => 'Article mis à jour.'], $postId);
+        }
+        else {
+            $this->generateView([
+                'post'  => $post
+            ]);
+        }
+    }
+
+    /**
      * @param $file
      * @return string|string[]
      */
@@ -118,5 +175,14 @@ class ControllerAdmin extends ControllerSecured
             return ['error' => "Impossible d'ajouter cette image. Veuillez réessayer."];
 
         return $file['name'];
+    }
+
+    /**
+     * @param string $filename Nom du fichier à supprimer dans le dossier ./assets/img/posts/
+     * @return bool
+     */
+    private function deleteFile(string $filename): bool
+    {
+        return unlink('./assets/img/posts/' . $filename);
     }
 }
