@@ -41,7 +41,7 @@
                         <div class="cell">
                             <div class="actions">
                                 <a href="/admin/editUser/{{ user.id }}" title="Modifier l'utilisateur"><i class="fas fa-pencil-alt"></i></a>
-                                {% if user.role != 2 %}
+                                {% if user.role != 2 and user.id != session.userID %}
                                     <a href="/admin/deleteUser/{{ user.id }}" title="Supprimer l'utilisateur"><i class="fas fa-trash-alt"></i></a>
                                 {% endif %}
                             </div>

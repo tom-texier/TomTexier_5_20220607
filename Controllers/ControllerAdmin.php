@@ -93,14 +93,13 @@ class ControllerAdmin extends ControllerSecured
     public function editPost()
     {
         if(!$this->request->existsParam('id'))
-            $this->redirect('admin', 'postsManagement', ['error' => 'Sélectionnez un article à modifier.']);
+            $this->redirect('admin', 'postsManagement');
 
         $postId = intval($this->request->getParam('id'));
         $post = $this->postsManager->get($postId);
 
-        if(!$post) {
-            $this->redirect('admin', 'addPost', ['error' => 'Cet article n\'existe pas, veuillez le créer grâce au formulaire ci-dessous.']);
-        }
+        if(!$post)
+            $this->redirect('admin', 'postsManagement', ['error' => 'Cet article n\'existe pas.']);
 
         if (
             $this->request->existsParam('title') ||
@@ -266,6 +265,92 @@ class ControllerAdmin extends ControllerSecured
         }
         else {
             $this->generateView();
+        }
+    }
+
+    public function editUser()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'usersManagement');
+
+        $userId = intval($this->request->getParam('id'));
+        $user = $this->usersManager->get($userId);
+
+        if(!$user)
+            $this->redirect('admin', 'usersManagement', ['error' => 'Cet utilisateur n\'existe pas.']);
+
+        if(
+            $this->request->existsParam('username') ||
+            $this->request->existsParam('email') ||
+            $this->request->existsParam('password') ||
+            $this->request->existsParam('confirm_password') ||
+            $this->request->existsParam('role') ||
+            $this->request->existsParam('submit')
+        ) {
+            $username = $this->request->getParam('username');
+            $email = $this->request->getParam('email');
+            $password = $this->request->getParam('password');
+            $confirm_password = $this->request->getParam('confirm_password');
+            $role = $this->request->getParam('role');
+
+            if(empty($username) || empty($email) || empty($role)) {
+                $this->redirect('admin', 'editUser', ['error' => 'Vous devez renseigner tous les champs obligatoires (*) du formulaire.'], $userId);
+            }
+
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->redirect('admin', 'editUser', [
+                    'error' => "L'adresse mail n'est pas valide."
+                ], $userId);
+            }
+
+            if(!empty($password) && !empty($confirm_password)) {
+                if(strlen($password) < 6) {
+                    $this->redirect('admin', 'editUser', [
+                        'error' => "Le mot de passe saisi est trop court."
+                    ], $userId);
+                }
+
+                if($password !== $confirm_password) {
+                    $this->redirect('admin', 'editUser', [
+                        'error' => "Les mots de passe ne correspondent pas."
+                    ], $userId);
+                }
+
+                $password = password_hash($password, PASSWORD_BCRYPT);
+
+                $user->setPassword($password);
+            }
+
+            if($role != User::MEMBER && $role != User::ADMIN && $userId != $_SESSION['userID']) {
+                $this->redirect('admin', 'editUser', [
+                    'error' => "Vous devez renseigner le rôle de l'utilisateur."
+                ], $userId);
+            }
+
+            $user->setUsername($username);
+            $user->setEmail($email);
+
+            if(!empty($role)) {
+                $user->setRole($role);
+            }
+
+            $result = $this->usersManager->update($user);
+
+            if(!$result)
+                $this->redirect('admin', 'editUser', ['error' => 'Une erreur est survenue. Impossible de modifier cet utilisateur.'], $userId);
+
+            if(!$result instanceof PDOStatement && isset($result['error'])) {
+                $this->redirect('admin', 'editUser', $result, $userId);
+            }
+            else {
+                $this->redirect('admin', 'editUser', ['success' => 'Utilisateur mis à jour.'], $userId);
+            }
+
+        }
+        else {
+            $this->generateView([
+                'user' => $user
+            ]);
         }
     }
 
