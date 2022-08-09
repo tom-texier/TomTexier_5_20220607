@@ -1,6 +1,7 @@
 <?php
 
 use App\Model\Entity\Post;
+use App\Model\Entity\User;
 use App\Model\Manager\CommentsManager;
 use App\Model\Manager\PostsManager;
 use App\Model\Manager\UsersManager;
@@ -202,9 +203,66 @@ class ControllerAdmin extends ControllerSecured
             $this->request->existsParam('email') ||
             $this->request->existsParam('password') ||
             $this->request->existsParam('confirm_password') ||
-            $this->request->existsParam('role')
+            $this->request->existsParam('role') ||
+            $this->request->existsParam('submit')
         ) {
+            $username = $this->request->getParam('username');
+            $email = $this->request->getParam('email');
+            $password = $this->request->getParam('password');
+            $confirm_password = $this->request->getParam('confirm_password');
+            $role = $this->request->getParam('role');
 
+            if(empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($role)) {
+                $this->redirect('admin', 'addUser', ['error' => 'Vous devez renseigner tous les champs du formulaire.']);
+            }
+
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->redirect('admin', 'addUser', [
+                    'error' => "L'adresse mail n'est pas valide."
+                ]);
+            }
+
+            if(strlen($password) < 6) {
+                $this->redirect('admin', 'addUser', [
+                    'error' => "Le mot de passe saisi est trop court."
+                ]);
+            }
+
+            if($password !== $confirm_password) {
+                $this->redirect('admin', 'addUser', [
+                    'error' => "Les mots de passe ne correspondent pas."
+                ]);
+            }
+
+            if($role != User::MEMBER && $role != User::ADMIN) {
+                $this->redirect('admin', 'addUser', [
+                    'error' => "Vous devez renseigner le rôle de l'utilisateur."
+                ]);
+            }
+
+            $password = password_hash($password, PASSWORD_BCRYPT);
+
+            $user = new User([
+                'username' => $username,
+                'email' => $email,
+                'password' => $password,
+                'role' => $role,
+                'createdAt' => new DateTime()
+            ]);
+
+            $result = $this->usersManager->add($user);
+
+            if(!$result)
+                $this->redirect('admin', 'addUser', ['error' => 'Une erreur est survenue. Impossible de créer cet utilisateur.']);
+
+            if(isset($result['error'])) {
+                $this->redirect('admin', 'addUser', $result);
+            }
+            else {
+                $this->redirect('admin', 'usersManagement', [
+                    'success' => 'Utilisateur créé'
+                ]);
+            }
         }
         else {
             $this->generateView();
