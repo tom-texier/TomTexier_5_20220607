@@ -25,6 +25,7 @@
                     <div class="cell">Identifiant</div>
                     <div class="cell">Titre</div>
                     <div class="cell">Créé le</div>
+                    <div class="cell">Auteur</div>
                     <div class="cell">Dernière modification</div>
                     <div class="cell"></div>
                 </div>
@@ -35,6 +36,10 @@
                         <div class="cell">#{{ post.id }}</div>
                         <div class="cell">{{ post.title }}</div>
                         <div class="cell">{{ post.createdAt|date("d/m/Y à H:i") }}</div>
+                        <div class="cell">
+                            {{ post.author.username }}
+                            <span class="info">({{ post.author.email }})</span>
+                        </div>
                         <div class="cell">{{ post.updatedAt ? post.updatedAt|date("d/m/Y à H:i") : '' }}</div>
                         <div class="cell">
                             <div class="actions">

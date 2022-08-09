@@ -68,7 +68,7 @@ class ControllerAdmin extends ControllerSecured
                 'title'     => $title,
                 'content'   => $content,
                 'image'     => $imageName,
-                'userID'    => $authorId,
+                'author'    => $authorId,
                 'createdAt' => new DateTime(),
                 'updatedAt' => new DateTime()
             ]);
@@ -104,13 +104,15 @@ class ControllerAdmin extends ControllerSecured
         if (
             $this->request->existsParam('title') ||
             $this->request->existsParam('content') ||
+            $this->request->existsParam('author') ||
             $this->request->existsParam('submit')
         ) {
             $title = $this->request->getParam('title');
             $content = $this->request->getParam('content');
             $image = !empty($_FILES['image']['tmp_name']) ? $_FILES['image'] : false;
+            $authorId = $this->request->getParam('author');
 
-            if (empty($title) || empty($content)) {
+            if (empty($title) || empty($content) || empty($authorId)) {
                 $this->redirect('admin', 'editPost', ['error' => 'Vous devez renseigner tous les champs du formulaire.'], $postId);
             }
 
@@ -127,6 +129,7 @@ class ControllerAdmin extends ControllerSecured
 
             $post->setTitle($title);
             $post->setContent($content);
+            $post->setAuthor($authorId);
             $post->setUpdatedAt(new DateTime());
 
             $result = $this->postsManager->update($post);
@@ -137,8 +140,11 @@ class ControllerAdmin extends ControllerSecured
             $this->redirect('admin', 'editPost', ['success' => 'Article mis à jour.'], $postId);
         }
         else {
+            $users = $this->usersManager->getList();
+
             $this->generateView([
-                'post'  => $post
+                'post'  => $post,
+                'users' => $users
             ]);
         }
     }

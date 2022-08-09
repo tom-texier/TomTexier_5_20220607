@@ -13,7 +13,7 @@ class PostsManager extends Model
      */
     public function getList(): array
     {
-        $sql = "SELECT id, title, content, image, createdAt, updatedAt
+        $sql = "SELECT id, author, title, content, image, createdAt, updatedAt
                 FROM posts
                 ORDER BY createdAt DESC";
 
@@ -52,10 +52,10 @@ class PostsManager extends Model
      */
     public function add(Post $post)
     {
-        $sql = "INSERT INTO posts (authorId, title, content, image, createdAt) VALUES (:authorId, :title, :content, :image, :createdAt)";
+        $sql = "INSERT INTO posts (author, title, content, image, createdAt) VALUES (:authorId, :title, :content, :image, :createdAt)";
 
         return $this->executeRequest($sql, [
-            ':authorId' => $post->getAuthorId(),
+            ':authorId' => $post->getAuthor()->getId(),
             ':title' => $post->getTitle(),
             ':content' => $post->getContent(),
             ':image' => $post->getImage(),
@@ -73,10 +73,11 @@ class PostsManager extends Model
     public function update(Post $post)
     {
         $sql = "UPDATE posts
-                SET title = :title, image = :image, content = :content, updatedAt = :updatedAt
+                SET author = :authorId, title = :title, image = :image, content = :content, updatedAt = :updatedAt
                 WHERE id = :id";
 
         return $this->executeRequest($sql, [
+            ':authorId' => $post->getAuthor()->getId(),
             ':title' => $post->getTitle(),
             ':image' => $post->getImage(),
             ':content' => $post->getContent(),
