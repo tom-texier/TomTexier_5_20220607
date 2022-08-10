@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script async src="https://kit.fontawesome.com/432cd448fd.js" crossorigin="anonymous"></script>
+    <title>{% block title %}Accueil{% endblock %} - Mon blog</title>
+    <link rel="stylesheet" href="/assets/css/blog_php.css">
+</head>
+<body class="{% block class_body %}{% endblock %}">
+    <header id="main-header">
+        <div class="container">
+            <div class="left">
+                <h1>Tom Texier</h1>
+                <h2>Le développeur qu'il vous faut !</h2>
+            </div>
+            <div class="right">
+                <div class="toggleMenu" id="toggleMenu">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path d="M 0 7.5 L 0 12.5 L 50 12.5 L 50 7.5 Z M 0 22.5 L 0 27.5 L 50 27.5 L 50 22.5 Z M 0 37.5 L 0 42.5 L 50 42.5 L 50 37.5 Z"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <nav id="sideMenu" class="preload">
+            <div class="close">&times;</div>
+            <ul class="main-menu">
+                <li><a href="/">Accueil</a></li>
+                <li><a href="#">Mes articles</a></li>
+                <li><a href="#">Contactez-moi</a></li>
+            </ul>
+
+            <div class="login-menu">
+                {% if not session.userID %}
+                    <a class="button button--login" href="/login">Connexion <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+                {% else %}
+                    <div class="logged-user"><i class="fa-solid fa-user"></i> {{ session.userEmail }}</div>
+                    {% if session.userRole == 2 %}
+                        <ul>
+                            <li><a href="/admin"><i class="fas fa-columns"></i> Console d'administration</a></li>
+                            <li><a href="/admin/postsManagement"><i class="fa-solid fa-newspaper"></i> Gérer les articles</a></li>
+                            <li><a href="/admin/commentsManagement"><i class="fa-solid fa-comments"></i> Gérer les commentaires</a></li>
+                            <li><a href="/admin/usersManagement"><i class="fa-solid fa-users"></i> Gérer les utilisateurs</a></li>
+                        </ul>
+                    {% endif %}
+                    <a class="button button--logout" href="/login/logout">Déconnexion <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    <footer>
+        {{ dump() }}
+    </footer>
+
+    <script src="/assets/js/blog_php.js"></script>
+</body>
+</html>

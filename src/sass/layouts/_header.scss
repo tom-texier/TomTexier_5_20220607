@@ -1,130 +1,59 @@
 body {
-    &.home {
-        header#main-header {
+    header#main-header {
+        position: sticky;
+        top: 0;
+        background-color: $primary-color;
+        z-index: 99;
+
+        .container {
             display: flex;
             justify-content: space-between;
-            position: relative;
-        
+            align-items: center;
+            padding: 10px;
+
             .left {
-                background-color: $primary-color;
-                width: 500px;
-                height: 300px;
-                border-radius: 0px 0px 500px 0px / 0px 0px 300px 0px;
+                width: 100%;
                 color: #fff;
-                padding: 50px 0 0 50px;
-        
+
                 h1 {
-                    margin: 0 0 20px 0;
+                    margin: 0;
                     font-weight: 600;
-                    font-size: 45px;
+                    font-size: 35px;
                     line-height: 1;
-                    width: 90%;
                 }
-        
+
                 h2 {
                     font-weight: 400;
                     margin: 0;
-                    width: 70%;
-                }
-            }
-        
-            .right {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-        
-                .toggleMenu {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 20px;
-                    border-radius: 50%;
-                    width: 70px;
-                    height: 70px;
-                    box-shadow: 0 0 10px -5px rgba(0, 0, 0, .7);
-                    background-color: $primary-color;
-                    transition: background-color .4s ease;
-                    cursor: pointer;
-                    
-                    svg {
-                        width: 100%;
-                        height: 100%;
-                        fill: #fff;
-                        transition: fill .4s ease;
-                    }
-        
-                    &:hover {
-                        background-color: #fff;
-        
-                        svg {
-                            fill: $primary-color;
-                        }
-                    }
+                    font-size: 18px;
                 }
             }
         }
-    }
 
-    &:not(.home) {
-        header#main-header {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-        
-            .left {
-                background-color: $primary-color;
-                width: 500px;
-                height: 300px;
-                border-radius: 0px 0px 500px 0px / 0px 0px 300px 0px;
-                color: #fff;
-                padding: 50px 0 0 50px;
-        
-                h1 {
-                    margin: 0 0 20px 0;
-                    font-weight: 600;
-                    font-size: 45px;
-                    line-height: 1;
-                    width: 90%;
+        .right {
+            .toggleMenu {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 15px;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                transition: background-color .4s ease;
+                cursor: pointer;
+
+                svg {
+                    width: 100%;
+                    height: 100%;
+                    fill: #fff;
+                    transition: fill .4s ease;
                 }
-        
-                h2 {
-                    font-weight: 400;
-                    margin: 0;
-                    width: 70%;
-                }
-            }
-        
-            .right {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-        
-                .toggleMenu {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    padding: 20px;
-                    border-radius: 50%;
-                    width: 70px;
-                    height: 70px;
-                    box-shadow: 0 0 10px -5px rgba(0, 0, 0, .7);
-                    background-color: $primary-color;
-                    transition: background-color .4s ease;
-                    cursor: pointer;
-                    
+
+                &:hover {
+                    background-color: #fff;
+
                     svg {
-                        width: 100%;
-                        height: 100%;
-                        fill: #fff;
-                        transition: fill .4s ease;
-                    }
-        
-                    &:hover {
-                        background-color: #fff;
-        
-                        svg {
-                            fill: $primary-color;
-                        }
+                        fill: $primary-color;
                     }
                 }
             }

@@ -12,6 +12,9 @@ abstract class Controller
         $this->request = $request;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function executeAction($action)
     {
         if(method_exists($this, $action)) {
@@ -30,7 +33,7 @@ abstract class Controller
     {
         $classController = get_class($this);
         $controller = str_replace("Controller", "", $classController);
-        $path = Configuration::get('rootWeb') . 'Views/Front';
+        $path = Configuration::get('rootWeb') . 'Views';
 
         if($error_message = $this->request->getSession()->getAttribute('error_message')) {
             $dataView['error_message'] = $error_message;

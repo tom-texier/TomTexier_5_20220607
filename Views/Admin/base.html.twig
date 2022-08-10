@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block class_body %}administration{% endblock %}
+
+{% block body %}
+    <nav class="admin-side-menu open">
+        <div class="title">
+            <h1>Console d'administration</h1>
+        </div>
+        <ul>
+            <li>
+                <a href="/admin"><i class="fas fa-columns"></i> Tableau de bord</a>
+            </li>
+            <li>
+                <a href="/admin/postsManagement"><i class="fa-solid fa-newspaper"></i> Articles</a>
+            </li>
+            <li>
+                <a href="/admin/commentsManagement"><i class="fa-solid fa-comments"></i> Commentaires</a>
+            </li>
+            <li>
+                <a href="/admin/usersManagement"><i class="fa-solid fa-users"></i> Utilisateurs</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="main-container">
+        {% block container %}{% endblock %}
+    </div>
+{% endblock %}
