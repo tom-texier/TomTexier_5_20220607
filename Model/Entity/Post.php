@@ -2,17 +2,18 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Manager\UsersManager;
 use Texier\Framework\Entity;
 
 class Post extends Entity
 {
     private int $id;
-    private int $authorId;
+    private User $author;
     private string $title;
     private string $content;
     private string $image;
     private \DateTime $createdAt;
-    private $updatedAt;
+    private ?\DateTime $updatedAt;
 
     /**
      * @return int
@@ -23,11 +24,11 @@ class Post extends Entity
     }
 
     /**
-     * @return int
+     * @return User
      */
-    public function getAuthorId(): int
+    public function getAuthor(): User
     {
-        return $this->authorId;
+        return $this->author;
     }
 
     /**
@@ -83,15 +84,17 @@ class Post extends Entity
     }
 
     /**
-     * @param $userID
+     * @param $authorId
      * @return void
      */
-    public function setAuthorId($authorId)
+    public function setAuthor($authorId)
     {
         if(!is_int($authorId)) {
             $authorId = intval($authorId);
         }
-        $this->authorId = $authorId;
+
+        $usersManager = new UsersManager();
+        $this->author = $usersManager->get($authorId);
     }
 
     /**

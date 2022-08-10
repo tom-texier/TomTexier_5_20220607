@@ -1,6 +1,7 @@
 <?php
 
 use App\Model\Entity\Post;
+use App\Model\Entity\User;
 use App\Model\Manager\CommentsManager;
 use App\Model\Manager\PostsManager;
 use App\Model\Manager\UsersManager;
@@ -68,7 +69,7 @@ class ControllerAdmin extends ControllerSecured
                 'title'     => $title,
                 'content'   => $content,
                 'image'     => $imageName,
-                'userID'    => $authorId,
+                'author'    => $authorId,
                 'createdAt' => new DateTime(),
                 'updatedAt' => new DateTime()
             ]);
@@ -92,25 +93,26 @@ class ControllerAdmin extends ControllerSecured
     public function editPost()
     {
         if(!$this->request->existsParam('id'))
-            $this->redirect('admin', 'postsManagement', ['error' => 'Sélectionnez un article à modifier.']);
+            $this->redirect('admin', 'postsManagement');
 
         $postId = intval($this->request->getParam('id'));
         $post = $this->postsManager->get($postId);
 
-        if(!$post) {
-            $this->redirect('admin', 'addPost', ['error' => 'Cet article n\'existe pas, veuillez le créer grâce au formulaire ci-dessous.']);
-        }
+        if(!$post)
+            $this->redirect('admin', 'postsManagement', ['error' => 'Cet article n\'existe pas.']);
 
         if (
             $this->request->existsParam('title') ||
             $this->request->existsParam('content') ||
+            $this->request->existsParam('author') ||
             $this->request->existsParam('submit')
         ) {
             $title = $this->request->getParam('title');
             $content = $this->request->getParam('content');
             $image = !empty($_FILES['image']['tmp_name']) ? $_FILES['image'] : false;
+            $authorId = $this->request->getParam('author');
 
-            if (empty($title) || empty($content)) {
+            if (empty($title) || empty($content) || empty($authorId)) {
                 $this->redirect('admin', 'editPost', ['error' => 'Vous devez renseigner tous les champs du formulaire.'], $postId);
             }
 
@@ -127,6 +129,7 @@ class ControllerAdmin extends ControllerSecured
 
             $post->setTitle($title);
             $post->setContent($content);
+            $post->setAuthor($authorId);
             $post->setUpdatedAt(new DateTime());
 
             $result = $this->postsManager->update($post);
@@ -137,8 +140,11 @@ class ControllerAdmin extends ControllerSecured
             $this->redirect('admin', 'editPost', ['success' => 'Article mis à jour.'], $postId);
         }
         else {
+            $users = $this->usersManager->getList();
+
             $this->generateView([
-                'post'  => $post
+                'post'  => $post,
+                'users' => $users
             ]);
         }
     }
@@ -146,7 +152,7 @@ class ControllerAdmin extends ControllerSecured
     public function deletePost()
     {
         if(!$this->request->existsParam('id'))
-            $this->redirect('admin', 'postsManagement', ['error' => 'Sélectionnez un article à supprimer.']);
+            $this->redirect('admin', 'postsManagement');
 
         $postId = intval($this->request->getParam('id'));
         $post = $this->postsManager->get($postId);
@@ -154,10 +160,198 @@ class ControllerAdmin extends ControllerSecured
         $result = $this->postsManager->delete($postId);
 
         if(!$result)
-            $this->redirect('admin', 'postsManagement', ['error' => 'Une erreur est survenue. Impossible de supprimer cet article.'], $postId);
+            $this->redirect('admin', 'postsManagement', ['error' => 'Une erreur est survenue. Impossible de supprimer cet article.']);
 
         $this->deleteFile($post->getImage());
-        $this->redirect('admin', 'postsManagement', ['success' => 'Article supprimé.'], $postId);
+        $this->redirect('admin', 'postsManagement', ['success' => 'Article supprimé.']);
+    }
+
+    //======================== Gestion des utilisateurs ======================
+
+    public function usersManagement()
+    {
+        $numberUsers = $this->usersManager->count();
+        $users = $this->usersManager->getList();
+
+        $this->generateView([
+            'users' => $users,
+            'numberUsers' => $numberUsers
+        ]);
+    }
+
+    public function deleteUser()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'usersManagement');
+
+        $userId = intval($this->request->getParam('id'));
+        $user = $this->usersManager->get($userId);
+
+        $result = $this->usersManager->delete($userId);
+
+        if(!$result)
+            $this->redirect('admin', 'usersManagement', ['error' => 'Une erreur est survenue. Impossible de supprimer cet utilisateur.']);
+
+        $this->redirect('admin', 'usersManagement', ['success' => 'Utilisateur supprimé.']);
+    }
+
+    public function addUser()
+    {
+        if(
+            $this->request->existsParam('username') ||
+            $this->request->existsParam('email') ||
+            $this->request->existsParam('password') ||
+            $this->request->existsParam('confirm_password') ||
+            $this->request->existsParam('role') ||
+            $this->request->existsParam('submit')
+        ) {
+            $username = $this->request->getParam('username');
+            $email = $this->request->getParam('email');
+            $password = $this->request->getParam('password');
+            $confirm_password = $this->request->getParam('confirm_password');
+            $role = $this->request->getParam('role');
+
+            if(empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($role)) {
+                $this->redirect('admin', 'addUser', ['error' => 'Vous devez renseigner tous les champs du formulaire.']);
+            }
+
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->redirect('admin', 'addUser', [
+                    'error' => "L'adresse mail n'est pas valide."
+                ]);
+            }
+
+            if(strlen($password) < 6) {
+                $this->redirect('admin', 'addUser', [
+                    'error' => "Le mot de passe saisi est trop court."
+                ]);
+            }
+
+            if($password !== $confirm_password) {
+                $this->redirect('admin', 'addUser', [
+                    'error' => "Les mots de passe ne correspondent pas."
+                ]);
+            }
+
+            if($role != User::MEMBER && $role != User::ADMIN) {
+                $this->redirect('admin', 'addUser', [
+                    'error' => "Vous devez renseigner le rôle de l'utilisateur."
+                ]);
+            }
+
+            $password = password_hash($password, PASSWORD_BCRYPT);
+
+            $user = new User([
+                'username' => $username,
+                'email' => $email,
+                'password' => $password,
+                'role' => $role,
+                'createdAt' => new DateTime()
+            ]);
+
+            $result = $this->usersManager->add($user);
+
+            if(!$result)
+                $this->redirect('admin', 'addUser', ['error' => 'Une erreur est survenue. Impossible de créer cet utilisateur.']);
+
+            if(isset($result['error'])) {
+                $this->redirect('admin', 'addUser', $result);
+            }
+            else {
+                $this->redirect('admin', 'usersManagement', [
+                    'success' => 'Utilisateur créé'
+                ]);
+            }
+        }
+        else {
+            $this->generateView();
+        }
+    }
+
+    public function editUser()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'usersManagement');
+
+        $userId = intval($this->request->getParam('id'));
+        $user = $this->usersManager->get($userId);
+
+        if(!$user)
+            $this->redirect('admin', 'usersManagement', ['error' => 'Cet utilisateur n\'existe pas.']);
+
+        if(
+            $this->request->existsParam('username') ||
+            $this->request->existsParam('email') ||
+            $this->request->existsParam('password') ||
+            $this->request->existsParam('confirm_password') ||
+            $this->request->existsParam('role') ||
+            $this->request->existsParam('submit')
+        ) {
+            $username = $this->request->getParam('username');
+            $email = $this->request->getParam('email');
+            $password = $this->request->getParam('password');
+            $confirm_password = $this->request->getParam('confirm_password');
+            $role = $this->request->getParam('role');
+
+            if(empty($username) || empty($email) || empty($role)) {
+                $this->redirect('admin', 'editUser', ['error' => 'Vous devez renseigner tous les champs obligatoires (*) du formulaire.'], $userId);
+            }
+
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->redirect('admin', 'editUser', [
+                    'error' => "L'adresse mail n'est pas valide."
+                ], $userId);
+            }
+
+            if(!empty($password) && !empty($confirm_password)) {
+                if(strlen($password) < 6) {
+                    $this->redirect('admin', 'editUser', [
+                        'error' => "Le mot de passe saisi est trop court."
+                    ], $userId);
+                }
+
+                if($password !== $confirm_password) {
+                    $this->redirect('admin', 'editUser', [
+                        'error' => "Les mots de passe ne correspondent pas."
+                    ], $userId);
+                }
+
+                $password = password_hash($password, PASSWORD_BCRYPT);
+
+                $user->setPassword($password);
+            }
+
+            if($role != User::MEMBER && $role != User::ADMIN && $userId != $_SESSION['userID']) {
+                $this->redirect('admin', 'editUser', [
+                    'error' => "Vous devez renseigner le rôle de l'utilisateur."
+                ], $userId);
+            }
+
+            $user->setUsername($username);
+            $user->setEmail($email);
+
+            if(!empty($role)) {
+                $user->setRole($role);
+            }
+
+            $result = $this->usersManager->update($user);
+
+            if(!$result)
+                $this->redirect('admin', 'editUser', ['error' => 'Une erreur est survenue. Impossible de modifier cet utilisateur.'], $userId);
+
+            if(!$result instanceof PDOStatement && isset($result['error'])) {
+                $this->redirect('admin', 'editUser', $result, $userId);
+            }
+            else {
+                $this->redirect('admin', 'editUser', ['success' => 'Utilisateur mis à jour.'], $userId);
+            }
+
+        }
+        else {
+            $this->generateView([
+                'user' => $user
+            ]);
+        }
     }
 
     /**

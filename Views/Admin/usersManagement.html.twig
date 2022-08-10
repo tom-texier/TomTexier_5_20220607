@@ -1,0 +1,58 @@
+{% extends "admin/base.html.twig" %}
+
+{% block container %}
+    <h1>Tous les utilisateurs</h1>
+
+    {% if error_message %}
+        <div class="notice notice__error">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    {% if success_message %}
+        <div class="notice notice__success">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
+    {% if not users %}
+        <div class="notice notice__info">
+            Aucun utilisateur trouvé
+        </div>
+    {% else %}
+        <div class="table">
+            <div class="head">
+                <div class="row">
+                    <div class="cell">Identifiant</div>
+                    <div class="cell">Nom d'utilisateur</div>
+                    <div class="cell">Email</div>
+                    <div class="cell">Rôle</div>
+                    <div class="cell">Créé le</div>
+                    <div class="cell"></div>
+                </div>
+            </div>
+            <div class="content">
+                {% for user in users %}
+                    <div class="row">
+                        <div class="cell">#{{ user.id }}</div>
+                        <div class="cell">{{ user.username }}</div>
+                        <div class="cell">{{ user.email }}</div>
+                        <div class="cell">{{ user.role == 2 ? 'Administrateur' : 'Membre' }}</div>
+                        <div class="cell">{{ user.createdAt|date("d/m/Y à H:i") }}</div>
+                        <div class="cell">
+                            <div class="actions">
+                                <a href="/admin/editUser/{{ user.id }}" title="Modifier l'utilisateur"><i class="fas fa-pencil-alt"></i></a>
+                                {% if user.role != 2 and user.id != session.userID %}
+                                    <a href="/admin/deleteUser/{{ user.id }}" title="Supprimer l'utilisateur"><i class="fas fa-trash-alt"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <a class="stickyButton stickyButton--add" href="/admin/addUser" title="Ajouter un utilisateur">
+        <i class="fas fa-plus"></i>
+    </a>
+{% endblock %}

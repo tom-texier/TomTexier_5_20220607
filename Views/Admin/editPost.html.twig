@@ -31,6 +31,15 @@
             <label for="content">Contenu<span class="required">*</span></label>
             <textarea id="content" name="content" required>{{ post.content }}</textarea>
         </div>
+        <div class="form-group form-group__select">
+            <label for="author">Auteur<span class="required">*</span></label>
+            <select name="author" id="author" required>
+                <option selected disabled>Choisir un auteur</option>
+                {% for user in users %}
+                    <option {{ post.author.id == user.id ? 'selected' : '' }} value="{{ user.id }}">{{ user.username }} ({{ user.email }})</option>
+                {% endfor %}
+            </select>
+        </div>
         <input type="submit" value="Mettre à jour" class="submit" name="submit">
     </form>
 {% endblock %}
