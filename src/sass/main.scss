@@ -10,12 +10,15 @@
 
 // Components
 @import "components/notices";
+@import "components/sticky-button";
 
 // Layouts
 @import "layouts/header";
 @import "layouts/menu";
 @import "layouts/admin/side-menu";
 @import "layouts/admin/content";
+@import "layouts/admin/tables";
+@import "layouts/admin/form";
 
 // Pages
 @import "pages/home";

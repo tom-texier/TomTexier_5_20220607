@@ -33,7 +33,7 @@ abstract class Controller
     {
         $classController = get_class($this);
         $controller = str_replace("Controller", "", $classController);
-        $path = Configuration::get('rootWeb') . 'Views';
+        $path = Configuration::get('rootPath') . 'Views';
 
         if($error_message = $this->request->getSession()->getAttribute('error_message')) {
             $dataView['error_message'] = $error_message;
@@ -51,11 +51,12 @@ abstract class Controller
 
     /**
      * @param string $controller Must be empty for ControllerHome
-     * @param $action
-     * @param $messages
+     * @param null $action
+     * @param array $messages
+     * @param int|null $id
      * @return void
      */
-    protected function redirect(string $controller = '', $action = null, $messages = [])
+    protected function redirect(string $controller = '', $action = null, $messages = [], int $id = null)
     {
         if(!empty($messages['error'])) {
             $this->request->getSession()->setAttribute('error_message', $messages['error']);
@@ -70,8 +71,14 @@ abstract class Controller
             header("Location:" . $rootWeb);
         }
         else {
-            $rootWeb = Configuration::get("rootWeb", "/");
-            header("Location:" . $rootWeb . $controller . "/" . $action);
+            if(is_null($id)) {
+                $rootWeb = Configuration::get("rootWeb", "/");
+                header("Location:" . $rootWeb . $controller . "/" . $action);
+            }
+            else {
+                $rootWeb = Configuration::get("rootWeb", "/");
+                header("Location:" . $rootWeb . $controller . "/" . $action . '/' . $id);
+            }
         }
         exit();
     }

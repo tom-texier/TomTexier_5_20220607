@@ -7,80 +7,143 @@ use Texier\Framework\Entity;
 class Post extends Entity
 {
     private int $id;
-    private int $userID;
+    private int $authorId;
     private string $title;
     private string $content;
     private string $image;
     private \DateTime $createdAt;
-    private \DateTime $updatedAt;
+    private $updatedAt;
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getUserID()
+    /**
+     * @return int
+     */
+    public function getAuthorId(): int
     {
-        return $this->userID;
+        return $this->authorId;
     }
 
-    public function getTitle()
+    /**
+     * @return string
+     */
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function getContent()
+    /**
+     * @return string
+     */
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function getImage()
+    /**
+     * @return string
+     */
+    public function getImage(): string
     {
         return $this->image;
     }
 
-    public function getCreatedAt()
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt()
+    /**
+     * @return \DateTime|null
+     */
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setId(int $id)
+    /**
+     * @param $id
+     * @return void
+     */
+    public function setId($id)
     {
+        if(!is_int($id)) {
+            $id = intval($id);
+        }
         $this->id = $id;
     }
 
-    public function setUserID(int $userID)
+    /**
+     * @param $userID
+     * @return void
+     */
+    public function setAuthorId($authorId)
     {
-        $this->userID = $userID;
+        if(!is_int($authorId)) {
+            $authorId = intval($authorId);
+        }
+        $this->authorId = $authorId;
     }
 
-    public function setTitle(string $title)
+    /**
+     * @param $title
+     * @return void
+     */
+    public function setTitle($title)
     {
         $this->title = $title;
     }
 
-    public function setContent(string $content)
+    /**
+     * @param $content
+     * @return void
+     */
+    public function setContent($content)
     {
         $this->content = $content;
     }
 
-    public function setImage(string $image)
+    /**
+     * @param $image
+     * @return void
+     */
+    public function setImage($image)
     {
         $this->image = $image;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    /**
+     * @param $createdAt
+     * @return void
+     * @throws \Exception
+     */
+    public function setCreatedAt($createdAt)
     {
+        if(!$createdAt instanceof \DateTime) {
+            $createdAt = new \DateTime($createdAt);
+        }
         $this->createdAt = $createdAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt)
+    /**
+     * @param $updatedAt
+     * @return void
+     * @throws \Exception
+     */
+    public function setUpdatedAt($updatedAt)
     {
+        if(!$updatedAt instanceof \DateTime && $updatedAt != '') {
+            $updatedAt = new \DateTime($updatedAt);
+        }
         $this->updatedAt = $updatedAt;
     }
 }
