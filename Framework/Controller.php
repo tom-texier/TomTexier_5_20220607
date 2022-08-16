@@ -66,20 +66,18 @@ abstract class Controller
             $this->request->getSession()->setAttribute('success_message', $messages['success']);
         }
 
+        $rootWeb = Configuration::get("rootWeb", "/");
+
         if(empty($controller) && empty($action)) {
-            $rootWeb = Configuration::get("rootWeb", "/");
             header("Location:" . $rootWeb);
         }
-        else {
-            if(is_null($id)) {
-                $rootWeb = Configuration::get("rootWeb", "/");
-                header("Location:" . $rootWeb . $controller . "/" . $action);
-            }
-            else {
-                $rootWeb = Configuration::get("rootWeb", "/");
-                header("Location:" . $rootWeb . $controller . "/" . $action . '/' . $id);
-            }
+        elseif(is_null($id)) {
+            header("Location:" . $rootWeb . $controller . "/" . $action);
         }
+        else {
+            header("Location:" . $rootWeb . $controller . "/" . $action . '/' . $id);
+        }
+
         exit();
     }
 }
