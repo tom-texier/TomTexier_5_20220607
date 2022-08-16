@@ -9,7 +9,7 @@
     <title>{% block title %}Accueil{% endblock %} - Mon blog</title>
     <link rel="stylesheet" href="/assets/css/blog_php.css">
 </head>
-<body class="{% block class_body %}{% endblock %}">
+<body class="preload {% block class_body %}{% endblock %}">
     <header id="main-header">
         <div class="container">
             <div class="left">
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <nav id="sideMenu" class="preload">
+        <nav id="sideMenu">
             <div class="close">&times;</div>
             <ul class="main-menu">
                 <li><a href="/">Accueil</a></li>
