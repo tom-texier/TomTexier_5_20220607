@@ -65,13 +65,15 @@ class ControllerAdmin extends ControllerSecured
                 $this->redirect('admin', 'addPost', $imageName);
             }
 
+            $now = new DateTime();
+
             $post = new Post([
                 'title'     => $title,
                 'content'   => $content,
                 'image'     => $imageName,
                 'author'    => $authorId,
-                'createdAt' => new DateTime(),
-                'updatedAt' => new DateTime()
+                'createdAt' => $now,
+                'updatedAt' => $now
             ]);
 
             $result = $this->postsManager->add($post);

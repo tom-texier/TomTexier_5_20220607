@@ -1,11 +1,13 @@
 .single-post {
   .article {
     margin-top: 50px;
+
     &__thumbnail {
       width: 100%;
       height: 600px;
-      object-fit: contain;
-      background-color: #fbfbfb;
+      object-fit: cover;
+      border-radius: 15px;
+      overflow: hidden;
     }
 
     &__metas {
@@ -13,7 +15,10 @@
       flex-wrap: wrap;
 
       small {
-        color: $accent-color;
+        color: #fff;
+        background: $accent-color;
+        border-radius: 5px;
+        padding: 2px 10px;
 
         i.far {
           margin-right: 5px;
@@ -33,6 +38,35 @@
 
     &__content {
       margin: 0;
+    }
+  }
+
+  .commentForm {
+    border-top: 1px solid #ececec;
+    padding: 50px 0;
+    margin-top: 50px;
+    background-color: #fbfbfb;
+
+    h2 {
+      margin-top: 0;
+    }
+
+    form {
+     .form-content .form-group {
+       &:first-child {
+         label {
+           display: none;
+         }
+
+         textarea {
+           min-height: 100px;
+         }
+       }
+
+       &:last-child {
+         margin-bottom: 0;
+       }
+     }
     }
   }
 }

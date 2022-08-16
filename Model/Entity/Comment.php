@@ -2,6 +2,7 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Manager\UsersManager;
 use Texier\Framework\Entity;
 
 class Comment extends Entity
@@ -11,8 +12,8 @@ class Comment extends Entity
     const VALIDATED = 2;
 
     private int $id;
-    private int $authorId;
-    private int $postID;
+    private User $author;
+    private int $postId;
     private string $content;
     private \DateTime $createdAt;
     private int $status;
@@ -22,14 +23,14 @@ class Comment extends Entity
         return $this->id;
     }
 
-    public function getAuthorId()
+    public function getAuthor(): User
     {
-        return $this->authorId;
+        return $this->author;
     }
 
-    public function getPostID()
+    public function getPostId()
     {
-        return $this->postID;
+        return $this->postId;
     } 
 
     public function getContent()
@@ -52,14 +53,23 @@ class Comment extends Entity
         $this->id = $id;
     }
 
-    public function setAuthorId(int $authorId)
+    /**
+     * @param int|string $authorId
+     * @return void
+     */
+    public function setAuthor($authorId)
     {
-        $this->authorId = $authorId;
+        if(!is_int($authorId)) {
+            $authorId = intval($authorId);
+        }
+
+        $usersManager = new UsersManager();
+        $this->author = $usersManager->get($authorId);
     }
 
-    public function setPostID(int $postID)
+    public function setPostId(int $postId)
     {
-        $this->postID = $postID;
+        $this->postId = $postId;
     }
 
     public function setContent(string $content)

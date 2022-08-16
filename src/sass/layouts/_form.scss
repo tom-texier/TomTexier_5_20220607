@@ -24,6 +24,11 @@
     margin-bottom: 20px;
     width: 100%;
 
+    &__hp {
+      visibility: hidden!important;
+      display: none!important;
+    }
+
     &.w-50 {
       width: calc(50% - 10px);
     }
@@ -86,17 +91,16 @@
       }
     }
 
-    &__content {
-      textarea {
-        min-height: 300px;
-        font-family: "Poppins", sans-serif;
-      }
+    textarea {
+      min-height: 300px;
+      width: 100%!important;
     }
 
     input[type="text"], input[type="password"], input[type="email"], select, textarea {
       border: 1px solid #ececec;
       padding: 10px 20px;
       border-radius: 15px;
+      font-family: "Poppins", sans-serif;
 
       &:focus {
         outline: 2px solid $accent-color;
