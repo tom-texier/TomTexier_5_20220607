@@ -4,3 +4,5 @@ node_modules
 /public/assets/img/posts/
 .DS_Store
 dev.ini
+/composer.lock
+/yarn.lock
