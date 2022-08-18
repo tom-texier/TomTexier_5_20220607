@@ -23,9 +23,11 @@ class ControllerPost extends Controller
 
         $postId = intval($this->request->getParam('id'));
         $post = $this->postsManager->get($postId);
+        $comments = $this->commentsManager->getListByPostId($postId);
 
         $this->generateView([
-            'post' => $post
+            'post' => $post,
+            'comments' => $comments
         ]);
     }
 
@@ -50,7 +52,7 @@ class ControllerPost extends Controller
 
         $comment = new Comment([
             'author' => $authorId,
-            'postId' => $postId,
+            'post' => $postId,
             'content' => $content,
             'createdAt' => new DateTime(),
             'status' => Comment::PENDING

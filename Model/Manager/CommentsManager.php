@@ -11,10 +11,30 @@ class CommentsManager extends Model
     {
         $sql = "SELECT *
                 FROM comments
-                WHERE postId = ?
+                WHERE post = :postId
+                AND status = :status
                 ORDER BY createdAt DESC";
 
-        $result = $this->executeRequest($sql, [$postId]);
+        $result = $this->executeRequest($sql, [
+            ':postId' => $postId,
+            ':status' => Comment::VALIDATED
+        ]);
+        $comments = [];
+
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $comments[] = new Comment($row);
+        }
+
+        return $comments;
+    }
+
+    public function getList(): array
+    {
+        $sql = "SELECT *
+                FROM comments
+                ORDER BY createdAt DESC";
+
+        $result = $this->executeRequest($sql);
         $comments = [];
 
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
@@ -32,10 +52,10 @@ class CommentsManager extends Model
     {
         $sql = "SELECT * FROM comments WHERE id = ?";
 
-        $post = $this->executeRequest($sql, [$commentId]);
+        $comment = $this->executeRequest($sql, [$commentId]);
 
-        if ($post->rowCount() == 1) {
-            $datas = $post->fetch(\PDO::FETCH_ASSOC);
+        if ($comment->rowCount() == 1) {
+            $datas = $comment->fetch(\PDO::FETCH_ASSOC);
 
             return new Comment($datas);
         }
@@ -45,11 +65,11 @@ class CommentsManager extends Model
 
     public function add(Comment $comment)
     {
-        $sql = "INSERT INTO comments (author, postId, content, createdAt, status) VALUES (:authorId, :postId, :content, :createdAt, :status)";
+        $sql = "INSERT INTO comments (author, post, content, createdAt, status) VALUES (:authorId, :postId, :content, :createdAt, :status)";
 
         return $this->executeRequest($sql, [
             ':authorId' => $comment->getAuthor()->getId(),
-            ':postId' => $comment->getPostId(),
+            ':postId' => $comment->getPost()->getId(),
             ':content' => $comment->getContent(),
             ':createdAt' => $comment->getCreatedAt()->format('Y-m-d H:i:s'),
             ':status' => $comment->getStatus()
@@ -85,5 +105,13 @@ class CommentsManager extends Model
             ':status' => Comment::PENDING,
             ':commentId' => $commentId
         ]);
+    }
+
+    public function count()
+    {
+        $sql = "SELECT COUNT(*) as numberComments FROM comments";
+        $result = $this->executeRequest($sql)->fetch();
+
+        return $result['numberComments'];
     }
 }

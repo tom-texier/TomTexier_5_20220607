@@ -96,10 +96,10 @@
             }
 
             &--logout {
-                background-color: #B91919;
+                background-color: $notice-error;
 
                 &:hover {
-                    background-color: darken(#B91919, 10%);
+                    background-color: darken($notice-error, 10%);
                 }
             }
         }

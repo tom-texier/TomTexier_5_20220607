@@ -2,6 +2,7 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Manager\PostsManager;
 use App\Model\Manager\UsersManager;
 use Texier\Framework\Entity;
 
@@ -13,12 +14,12 @@ class Comment extends Entity
 
     private int $id;
     private User $author;
-    private int $postId;
+    private Post $post;
     private string $content;
     private \DateTime $createdAt;
     private int $status;
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -28,28 +29,31 @@ class Comment extends Entity
         return $this->author;
     }
 
-    public function getPostId()
+    public function getPost(): Post
     {
-        return $this->postId;
+        return $this->post;
     } 
 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
 
-    public function setId(int $id)
+    public function setId($id)
     {
+        if(!is_int($id)) {
+            $id = intval($id);
+        }
         $this->id = $id;
     }
 
@@ -67,23 +71,34 @@ class Comment extends Entity
         $this->author = $usersManager->get($authorId);
     }
 
-    public function setPostId(int $postId)
+    public function setPost($postId)
     {
-        $this->postId = $postId;
+        if(!is_int($postId)) {
+            $postId = intval($postId);
+        }
+
+        $postManager = new PostsManager();
+        $this->post = $postManager->get($postId);
     }
 
-    public function setContent(string $content)
+    public function setContent($content)
     {
         $this->content = $content;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt($createdAt)
     {
+        if(!$createdAt instanceof \DateTime) {
+            $createdAt = new \DateTime($createdAt);
+        }
         $this->createdAt = $createdAt;
     }
 
-    public function setStatus(int $status)
+    public function setStatus($status)
     {
+        if(!is_int($status)) {
+            $status = intval($status);
+        }
         $this->status = $status;
     }
 }

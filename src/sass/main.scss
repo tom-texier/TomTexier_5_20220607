@@ -19,6 +19,7 @@
 @import "layouts/admin/content";
 @import "layouts/admin/tables";
 @import "layouts/form";
+@import "layouts/confirm-modal";
 
 // Pages
 @import "pages/home";
@@ -26,5 +27,6 @@
 @import "pages/registration";
 @import "pages/posts";
 @import "pages/single-post";
+@import "pages/show-comment";
 
 // Themes

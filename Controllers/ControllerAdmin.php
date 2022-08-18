@@ -187,7 +187,6 @@ class ControllerAdmin extends ControllerSecured
             $this->redirect('admin', 'usersManagement');
 
         $userId = intval($this->request->getParam('id'));
-        $user = $this->usersManager->get($userId);
 
         $result = $this->usersManager->delete($userId);
 
@@ -355,6 +354,81 @@ class ControllerAdmin extends ControllerSecured
             ]);
         }
     }
+
+    //======================== Gestion des commentaires ======================
+
+    public function commentsManagement()
+    {
+        $numberComments = $this->commentsManager->count();
+        $comments = $this->commentsManager->getList();
+
+        $this->generateView([
+            'comments' => $comments,
+            'numberComments' => $numberComments
+        ]);
+    }
+
+    public function validateComment()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'commentsManagement');
+
+        $commentId = intval($this->request->getParam('id'));
+
+        $result = $this->commentsManager->validate($commentId);
+
+        if(!$result)
+            $this->redirect('admin', 'commentsManagement', ['error' => 'Une erreur est survenue. Impossible de valider ce commentaire.']);
+
+        $this->redirect('admin', 'commentsManagement', ['success' => 'Commentaire validé.']);
+    }
+
+    public function disableComment()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'commentsManagement');
+
+        $commentId = intval($this->request->getParam('id'));
+
+        $result = $this->commentsManager->disable($commentId);
+
+        if(!$result)
+            $this->redirect('admin', 'commentsManagement', ['error' => 'Une erreur est survenue. Impossible de désactiver ce commentaire.']);
+
+        $this->redirect('admin', 'commentsManagement', ['success' => 'Commentaire désactivé.']);
+    }
+
+    public function deleteComment()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'commentsManagement');
+
+        $commentId = intval($this->request->getParam('id'));
+        $result = $this->commentsManager->delete($commentId);
+
+        if(!$result)
+            $this->redirect('admin', 'commentsManagement', ['error' => 'Une erreur est survenue. Impossible de supprimer ce commentaire.']);
+
+        $this->redirect('admin', 'commentsManagement', ['success' => 'Commentaire supprimé.']);
+    }
+
+    public function showComment()
+    {
+        if(!$this->request->existsParam('id'))
+            $this->redirect('admin', 'commentsManagement');
+
+        $commentId = intval($this->request->getParam('id'));
+        $comment = $this->commentsManager->get($commentId);
+
+        if(!$comment)
+            $this->redirect('admin', 'commentsManagement', ['error' => "Ce commentaire n'existe pas."]);
+
+        $this->generateView([
+            'comment' => $comment
+        ]);
+    }
+
+    //======================== Utilitaires ======================
 
     /**
      * @param $file

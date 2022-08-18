@@ -1,0 +1,64 @@
+{% extends "admin/base.html.twig" %}
+
+{% block container %}
+    <h1>Tous les commentaires</h1>
+
+    {% if error_message %}
+        <div class="notice notice__error">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    {% if success_message %}
+        <div class="notice notice__success">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
+    {% if not comments %}
+        <div class="notice notice__info">
+            Aucun commentaire trouvé
+        </div>
+    {% else %}
+        <div class="table">
+            <div class="head">
+                <div class="row">
+                    <div class="cell">Identifiant</div>
+                    <div class="cell">Auteur</div>
+                    <div class="cell">Article</div>
+                    <div class="cell">Contenu</div>
+                    <div class="cell">Publié le</div>
+                    <div class="cell">Statut</div>
+                    <div class="cell"></div>
+                </div>
+            </div>
+            <div class="content">
+                {% for comment in comments %}
+                    <div class="row">
+                        <div class="cell">#{{ comment.id }}</div>
+                        <div class="cell">
+                            {{ comment.author.username }}
+                            <span class="info">({{ comment.author.email }})</span>
+                        </div>
+                        <div class="cell">
+                            <a href="/post/{{ comment.post.id }}" target="_blank" title="Voir l'article">{{ comment.post.title }}</a>
+                        </div>
+                        <div class="cell">{{ comment.content|length > 20 ? [comment.content[0:20], '...']|join : comment.content }}</div>
+                        <div class="cell">{{ comment.createdAt | date("d/m/Y à H:i") }}</div>
+                        <div class="cell">{{ comment.status == 1 ? '<span class="icon icon__pending"><i class="fas fa-times-circle"></i></span>' : '<span class="icon icon__validated"><i class="fas fa-check-circle"></i></span>' }}</div>
+                        <div class="cell">
+                            <div class="actions">
+                                {% if comment.status == 1 %}
+                                    <a href="/admin/validateComment/{{ comment.id }}" title="Valider le commentaire"><i class="fas fa-check"></i></a>
+                                {% else %}
+                                    <a href="/admin/disableComment/{{ comment.id }}" title="Désactiver le commentaire"><i class="fas fa-times"></i></a>
+                                {% endif %}
+                                <a href="/admin/showComment/{{ comment.id }}" title="Voir le commentaire"><i class="fas fa-eye"></i></a>
+                                <a href="/admin/deleteComment/{{ comment.id }}" title="Supprimer le commentaire" data-confirm="true"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

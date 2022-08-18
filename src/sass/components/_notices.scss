@@ -7,20 +7,20 @@
   margin-bottom: 20px;
 
   &__error {
-    border-color: #B91919;
-    color: #B91919;
+    border-color: $notice-error;
+    color: $notice-error;
     background-color: rgba(185, 25, 25, .1)
   }
 
   &__success {
-    border-color: #6AA84F;
-    color: #6AA84F;
+    border-color: $notice-success;
+    color: $notice-success;
     background-color: rgba(106,168,79, .1);
   }
 
   &__info {
-    border-color: #3D85C6;
-    color: #3D85C6;
+    border-color: $notice-info;
+    color: $notice-info;
     background-color: rgba(61,133,198, .1);
   }
 }
