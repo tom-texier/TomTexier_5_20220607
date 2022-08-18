@@ -1,8 +1,37 @@
-.administration .form-action {
+.form-action {
+  .form-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    > a {
+      font-size: 14px;
+      color: $text-color;
+      text-align: center;
+      display: block;
+      margin: auto;
+      transition: color .4s ease;
+
+      &:hover {
+        color: $accent-color;
+      }
+    }
+  }
+
   .form-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+    width: 100%;
+
+    &__hp {
+      visibility: hidden!important;
+      display: none!important;
+    }
+
+    &.w-50 {
+      width: calc(50% - 10px);
+    }
 
     &__title input {
       font-size: 20px;
@@ -62,17 +91,16 @@
       }
     }
 
-    &__content {
-      textarea {
-        min-height: 300px;
-        font-family: "Poppins", sans-serif;
-      }
+    textarea {
+      min-height: 300px;
+      width: 100%!important;
     }
 
     input[type="text"], input[type="password"], input[type="email"], select, textarea {
       border: 1px solid #ececec;
       padding: 10px 20px;
       border-radius: 15px;
+      font-family: "Poppins", sans-serif;
 
       &:focus {
         outline: 2px solid $accent-color;
@@ -89,6 +117,11 @@
     border-radius: 15px;
     cursor: pointer;
     transition: .2s ease;
+    width: max-content;
+
+    &.w-100 {
+      width: 100%;
+    }
 
     &:hover {
       background-color: $accent-color;

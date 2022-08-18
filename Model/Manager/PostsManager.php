@@ -13,7 +13,7 @@ class PostsManager extends Model
      */
     public function getList(): array
     {
-        $sql = "SELECT id, author, title, content, image, createdAt, updatedAt
+        $sql = "SELECT *
                 FROM posts
                 ORDER BY createdAt DESC";
 
@@ -28,14 +28,14 @@ class PostsManager extends Model
     }
 
     /**
-     * @param int $id
+     * @param int $postId
      * @return Post|false
      */
-    public function get(int $id)
+    public function get(int $postId)
     {
         $sql = "SELECT * FROM posts WHERE id = ?";
 
-        $post = $this->executeRequest($sql, [$id]);
+        $post = $this->executeRequest($sql, [$postId]);
 
         if ($post->rowCount() == 1) {
             $datas = $post->fetch(\PDO::FETCH_ASSOC);
@@ -63,11 +63,11 @@ class PostsManager extends Model
         ]);
     }
 
-    public function delete(int $id)
+    public function delete(int $postId)
     {
         $sql = "DELETE FROM posts WHERE id = ?";
 
-        return $this->executeRequest($sql, [$id]);
+        return $this->executeRequest($sql, [$postId]);
     }
 
     public function update(Post $post)
