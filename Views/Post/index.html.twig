@@ -65,5 +65,27 @@
         </div>
     </section>
 
-    <section class="commentsList"></section>
+    {% if comments %}
+        <section class="commentsList">
+            <div class="container">
+                <h2>Tous les commentaires</h2>
+                <div class="comments">
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <div class="author">
+                                <span class="info">{{ comment.author.username }}</span>
+                                {% if comment.author.id == post.author.id %}
+                                    <span class="info is_post_author">Auteur</span>
+                                {% endif %}
+                            </div>
+                            <div class="content">
+                                <span class="date">{{ comment.createdAt | date("d/m/Y") }}</span>
+                                {{ comment.content }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
 {% endblock %}
