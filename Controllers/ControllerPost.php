@@ -19,7 +19,7 @@ class ControllerPost extends Controller
     public function index()
     {
         if(!$this->request->existsParam('id'))
-            $this->redirect('posts');
+            $this->redirect('articles');
 
         $postId = intval($this->request->getParam('id'));
         $post = $this->postsManager->get($postId);
@@ -34,19 +34,19 @@ class ControllerPost extends Controller
     public function addComment()
     {
         if(!$this->request->existsParam('id'))
-            $this->redirect('posts');
+            $this->redirect('articles');
 
         $postId = intval($this->request->getParam('id'));
         $post = $this->postsManager->get($postId);
 
         if(!$post)
-            $this->redirect('posts');
+            $this->redirect('articles');
 
         if(!$authorId = $this->request->getSession()->getAttribute('userID'))
-            $this->redirect('post', null, ['error' => "Vous devez être connecté pour ajouter un commentaire."], $post->getId());
+            $this->redirect('article', null, ['error' => "Vous devez être connecté pour ajouter un commentaire."], $post->getId());
 
         if(!$this->request->existsParam('content') || $this->request->existsParam('country'))
-            $this->redirect('post', null, ['error' => "Un ou plusieurs champs contiennent une erreur. Veuillez vérifier et essayer à nouveau."], $post->getId());
+            $this->redirect('article', null, ['error' => "Un ou plusieurs champs contiennent une erreur. Veuillez vérifier et essayer à nouveau."], $post->getId());
 
         $content = $this->request->getParam('content');
 
@@ -61,8 +61,8 @@ class ControllerPost extends Controller
         $result = $this->commentsManager->add($comment);
 
         if(!$result)
-            $this->redirect('post', null, ['error' => "Une erreur est survenue. Impossible d'ajouter ce commentaire."], $postId);
+            $this->redirect('article', null, ['error' => "Une erreur est survenue. Impossible d'ajouter ce commentaire."], $postId);
 
-        $this->redirect('post', null, ['success' => "Votre commentaire a bien été enregistré. Un administrateur l'examinera avant qu'il ne soit publié."], $postId);
+        $this->redirect('article', null, ['success' => "Votre commentaire a bien été enregistré. Un administrateur l'examinera avant qu'il ne soit publié."], $postId);
     }
 }

@@ -36,19 +36,19 @@ class ControllerRegistration extends Controller
             $confirm_password = $this->request->getParam("confirm_password");
 
             if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->redirect('registration', null, [
+                $this->redirect('inscription', null, [
                     'error' => "L'adresse mail n'est pas valide."
                 ]);
             }
 
             if(strlen($password) < 6) {
-                $this->redirect('registration', null, [
+                $this->redirect('inscription', null, [
                     'error' => "Le mot de passe saisi est trop court."
                 ]);
             }
 
             if($password !== $confirm_password) {
-                $this->redirect('registration', null, [
+                $this->redirect('inscription', null, [
                     'error' => "Les mots de passe ne correspondent pas."
                 ]);
             }
@@ -66,10 +66,10 @@ class ControllerRegistration extends Controller
             $result = $this->usersManager->add($user);
 
             if(isset($result['error'])) {
-                $this->redirect('registration', null, $result);
+                $this->redirect('inscription', null, $result);
             }
             else {
-                $this->redirect('login', null, [
+                $this->redirect('connexion', null, [
                     'success' => 'Votre inscription a bien été prise en compte. Vous pouvez maintenant vous connecter.'
                 ]);
             }

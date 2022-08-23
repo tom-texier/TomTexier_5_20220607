@@ -33,7 +33,7 @@
 
             <div class="login-menu">
                 {% if not session.userID %}
-                    <a class="button button--login" href="/login/">Connexion <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+                    <a class="button button--login" href="/connexion/">Connexion <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
                 {% else %}
                     <div class="logged-user"><i class="fa-solid fa-user"></i> {{ session.userEmail }}</div>
                     {% if session.userRole == 2 %}
@@ -44,7 +44,7 @@
                             <li><a href="/admin/usersManagement/"><i class="fa-solid fa-users"></i> Gérer les utilisateurs</a></li>
                         </ul>
                     {% endif %}
-                    <a class="button button--logout" href="/login/logout">Déconnexion <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                    <a class="button button--logout" href="/deconnexion">Déconnexion <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                 {% endif %}
             </div>
         </nav>
