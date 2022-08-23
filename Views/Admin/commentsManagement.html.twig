@@ -40,7 +40,7 @@
                             <span class="info">({{ comment.author.email }})</span>
                         </div>
                         <div class="cell">
-                            <a href="/post/{{ comment.post.id }}" target="_blank" title="Voir l'article">{{ comment.post.title }}</a>
+                            <a href="/article/{{ comment.post.id }}" target="_blank" title="Voir l'article">{{ comment.post.title }}</a>
                         </div>
                         <div class="cell">{{ comment.content|length > 20 ? [comment.content[0:20], '...']|join : comment.content }}</div>
                         <div class="cell">{{ comment.createdAt | date("d/m/Y à H:i") }}</div>

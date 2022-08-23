@@ -3,6 +3,7 @@ RewriteEngine On
 
 # FRONT REWRITING
 RewriteRule ^articles/?$ posts/
+RewriteRule ^article/([a-zA-Z0-9]*)/?$ post/$1 [NC,L]
 RewriteRule ^contactez-moi/?$ contact/
 
 # Réécrit une URL de type xxx/yyy/zzz en index.php?controller=xxx&action=yyy&id=zzz
