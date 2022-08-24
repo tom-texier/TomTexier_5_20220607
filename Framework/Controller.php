@@ -74,6 +74,9 @@ abstract class Controller
         elseif(is_null($id)) {
             header("Location:" . $rootWeb . $controller . "/" . $action);
         }
+        elseif(is_null($action)) {
+            header("Location:" . $rootWeb . $controller . "/" . $id);
+        }
         else {
             header("Location:" . $rootWeb . $controller . "/" . $action . '/' . $id);
         }

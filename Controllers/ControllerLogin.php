@@ -43,13 +43,13 @@ class ControllerLogin extends Controller
                 $this->redirect();
             }
             else {
-                $this->redirect('login', null, [
+                $this->redirect('connexion', null, [
                     'error' => "Impossible de vous connecter. Les identifiants fournis semblent incorrects."
                 ]);
             }
         }
         else {
-            $this->redirect('login', null, [
+            $this->redirect('connexion', null, [
                 'error' => "Vous devez renseigner votre email et votre mot de passe."
             ]);
         }
@@ -58,6 +58,6 @@ class ControllerLogin extends Controller
     public function logout()
     {
         $this->request->getSession()->destroy();
-        $this->redirect('login');
+        $this->redirect('connexion');
     }
 }
