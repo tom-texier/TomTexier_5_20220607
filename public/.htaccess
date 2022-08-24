@@ -1,6 +1,8 @@
 Options +FollowSymLinks
 RewriteEngine On
 
+ErrorDocument 404 /error/404
+
 # FRONT REWRITING
 RewriteRule ^articles/?$ posts/
 RewriteRule ^article/([a-zA-Z0-9]*)/?$ post/$1 [NC,L]

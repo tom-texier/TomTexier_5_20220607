@@ -23,6 +23,11 @@ class ControllerPost extends Controller
 
         $postId = intval($this->request->getParam('id'));
         $post = $this->postsManager->get($postId);
+
+        if(!$post) {
+            $this->redirect('error', null, [], 404);
+        }
+
         $comments = $this->commentsManager->getListByPostId($postId);
 
         $this->generateView([
