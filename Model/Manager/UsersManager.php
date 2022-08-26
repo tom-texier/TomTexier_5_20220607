@@ -56,15 +56,13 @@ class UsersManager extends Model
 
         $sql = "INSERT INTO users (username, email, password, role, createdAt) VALUES (:username, :email, :password, :role, :createdAt)";
 
-        $this->executeRequest($sql, [
+        return $this->executeRequest($sql, [
             ':username' => $user->getUsername(),
             ':email' => $user->getEmail(),
             ':password' => $user->getPassword(),
             ':role' => $user->getRole(),
             ':createdAt' => $user->getCreatedAt()->format('Y-m-d H:i:s')
         ]);
-
-        return true;
     }
 
     public function delete(int $id)

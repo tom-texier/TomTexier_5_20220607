@@ -26,7 +26,7 @@
                 <small class="article__author">
                     <i class="far fa-user"></i> Publié par <i>{{ post.author.username }}</i></small>
                 <small class="article__date">
-                    <i class="far fa-calendar-alt"></i> {{ post.createdAt == post.updatedAt ? 'Publié le' : 'Mis à jour le' }} {{ post.updatedAt | date('d/m/Y') }}
+                    <i class="far fa-calendar-alt"></i> {{ post.updatedAt is null ? 'Publié le' : 'Mis à jour le' }} {{ post.updatedAt | date('d/m/Y') }}
                 </small>
             </div>
 

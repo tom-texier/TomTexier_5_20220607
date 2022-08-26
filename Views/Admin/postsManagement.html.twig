@@ -34,7 +34,7 @@
                 {% for post in posts %}
                     <div class="row">
                         <div class="cell">#{{ post.id }}</div>
-                        <div class="cell">{{ post.title }}</div>
+                        <div class="cell">{{ post.title|length > 60 ? [post.title[0:60], '...']|join : post.title }}</div>
                         <div class="cell">{{ post.createdAt | date("d/m/Y à H:i") }}</div>
                         <div class="cell">
                             {{ post.author.username }}

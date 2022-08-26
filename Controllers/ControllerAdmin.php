@@ -255,7 +255,7 @@ class ControllerAdmin extends ControllerSecured
             if(!$result)
                 $this->redirect('admin', 'addUser', ['error' => 'Une erreur est survenue. Impossible de créer cet utilisateur.']);
 
-            if(isset($result['error'])) {
+            if(!$result instanceof PDOStatement && isset($result['error'])) {
                 $this->redirect('admin', 'addUser', $result);
             }
             else {
@@ -292,7 +292,13 @@ class ControllerAdmin extends ControllerSecured
             $email = $this->request->getParam('email');
             $password = $this->request->getParam('password');
             $confirm_password = $this->request->getParam('confirm_password');
-            $role = $this->request->getParam('role');
+
+            if($this->request->getSession()->getAttribute('userID') == $userId) {
+                $role = $this->request->getSession()->getAttribute('userRole');
+            }
+            else {
+                $role = $this->request->getParam('role');
+            }
 
             if(empty($username) || empty($email) || empty($role)) {
                 $this->redirect('admin', 'editUser', ['error' => 'Vous devez renseigner tous les champs obligatoires (*) du formulaire.'], $userId);
@@ -344,6 +350,10 @@ class ControllerAdmin extends ControllerSecured
                 $this->redirect('admin', 'editUser', $result, $userId);
             }
             else {
+                if($this->request->getSession()->getAttribute('userID') == $userId) {
+                    $this->request->getSession()->setAttribute('userName', $user->getUsername());
+                    $this->request->getSession()->setAttribute('userEmail', $user->getEmail());
+                }
                 $this->redirect('admin', 'editUser', ['success' => 'Utilisateur mis à jour.'], $userId);
             }
 

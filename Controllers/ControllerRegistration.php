@@ -43,7 +43,7 @@ class ControllerRegistration extends Controller
 
             if(strlen($password) < 6) {
                 $this->redirect('inscription', null, [
-                    'error' => "Le mot de passe saisi est trop court."
+                    'error' => "Le mot de passe saisi est trop court. Minimum 6 caractères."
                 ]);
             }
 
@@ -65,7 +65,7 @@ class ControllerRegistration extends Controller
 
             $result = $this->usersManager->add($user);
 
-            if(isset($result['error'])) {
+            if(!$result instanceof PDOStatement && isset($result['error'])) {
                 $this->redirect('inscription', null, $result);
             }
             else {

@@ -6,6 +6,10 @@
   font-size: 15px;
   margin-bottom: 20px;
 
+  &:first-child {
+    margin-top: 20px;
+  }
+
   &__error {
     border-color: $notice-error;
     color: $notice-error;
