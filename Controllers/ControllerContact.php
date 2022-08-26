@@ -1,5 +1,6 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
 use Texier\Framework\Configuration;
 use Texier\Framework\Controller;
 
@@ -10,6 +11,10 @@ class ControllerContact extends Controller
         $this->generateView();
     }
 
+    /**
+     * @return void
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
     public function send()
     {
         if(
@@ -28,7 +33,16 @@ class ControllerContact extends Controller
         $email = $this->request->getParam('email');
         $message = $this->request->getParam('message');
 
+        $phpmailer = new PHPMailer();
+        $phpmailer->isSMTP();
+        $phpmailer->Host = Configuration::get('smtp_host');
+        $phpmailer->SMTPAuth = boolval(Configuration::get('smtp_smtpAuth'));
+        $phpmailer->Port = Configuration::get('smtp_port');
+        $phpmailer->Username = Configuration::get('smtp_username');
+        $phpmailer->Password = Configuration::get('smtp_password');
+
         $to = Configuration::get('contact_email');
+        $from = Configuration::get('noreply_email');
         $subject = "Vous avez un nouveau message de votre blog";
         $body = file_get_contents(Configuration::get('rootPath') . 'public/templates/email.html');
         $body = str_replace(
@@ -40,7 +54,15 @@ class ControllerContact extends Controller
         $headers = "From:" . Configuration::get('noreply_email') . "\n";
         $headers .= "Reply-To:" . $email . "\n";
 
-        $result = mail($to, $subject, $body, $headers);
+        $phpmailer->setFrom($from);
+        $phpmailer->addAddress($to);
+        $phpmailer->addReplyTo($email);
+
+        $phpmailer->isHTML();
+        $phpmailer->Subject = $subject;
+        $phpmailer->Body = $body;
+
+        $result = $phpmailer->send();
 
         if(!$result)
             $this->redirect('contactez-moi', null, ['error' => "Une erreur est survenue. Veuillez réessayer ultérieurement."]);
