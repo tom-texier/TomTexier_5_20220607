@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Aug 18, 2022 at 05:47 PM
+-- Generation Time: Aug 26, 2022 at 02:14 PM
 -- Server version: 5.7.34
 -- PHP Version: 7.4.21
 
@@ -44,8 +44,7 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `author`, `post`, `content`, `createdAt`, `status`) VALUES
-(4, 4, 1, 'Test commentaire', '2022-08-16 18:55:13', 2),
-(5, 4, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam auctor tortor tortor, condimentum hendrerit ligula porttitor ac. Aliquam arcu neque, euismod mattis nunc in, aliquam tristique ligula. Mauris est arcu, faucibus vel metus ut, feugiat hendrerit velit. Morbi fringilla faucibus dui, non fermentum orci hendrerit at. Suspendisse placerat viverra vulputate.', '2022-08-17 18:45:57', 2);
+(13, 22, 4, 'Un commentaire', '2022-08-26 11:18:28', 1);
 
 -- --------------------------------------------------------
 
@@ -69,7 +68,7 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `author`, `title`, `content`, `image`, `createdAt`, `updatedAt`) VALUES
-(1, 4, 'Test article', 'Test contenu', 'post-62f1f573978b49.03112832.jpeg', '2022-08-09 07:49:39', '2022-08-16 10:20:37');
+(4, 22, 'Le pantalon de l\'année !', 'Un super pantalon.', 'post-63088a0caec717.99965321.jpg', '2022-08-26 10:53:32', '2022-08-26 10:53:47');
 
 -- --------------------------------------------------------
 
@@ -92,8 +91,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `createdAt`) VALUES
-(4, 'admin', 'admin@admin.fr', '$2y$10$qRsNSWIQXPwDn0kI8QxnI.MMG4gwqPPL51hzgpQTZ5z1GGjUQfVMa', 2, '2022-07-26 11:40:34'),
-(6, 'ttexier', 'tom.texierpro@gmail.com', '$2y$10$VdO.zji2l93/ye5LTCLNSehNJq5ZdjzukR0QMXjGbFDiA.5jKd/Fm', 1, '2022-08-08 19:35:57');
+(22, 'admin', 'admin@admin.fr', '$2y$10$lfpbscjd.TDVOVo12fUvZO3dl55Cn4Dbn3UfO5GEb6EdzAi/.RmRa', 2, '2022-08-26 10:37:21');
 
 --
 -- Indexes for dumped tables
@@ -103,13 +101,16 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `createdAt`)
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_COMMENTS_POSTS` (`post`),
+  ADD KEY `FK_COMMENTS_USERS` (`author`);
 
 --
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_POSTS_USERS` (`author`);
 
 --
 -- Indexes for table `users`
@@ -127,19 +128,36 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `FK_COMMENTS_POSTS` FOREIGN KEY (`post`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_COMMENTS_USERS` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `FK_POSTS_USERS` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
