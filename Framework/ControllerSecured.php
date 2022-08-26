@@ -17,7 +17,7 @@ abstract class ControllerSecured extends Controller
             }
         }
         else {
-            $this->redirect('login');
+            $this->redirect('connexion');
         }
     }
 }

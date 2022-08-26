@@ -28,9 +28,49 @@
     border: 1px solid #ececec;
     border-radius: 15px;
     padding: 20px;
+    max-width: 500px;
 
     .text {
       font-size: 18px;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+
+      .action {
+        text-align: center;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 15px;
+        color: #fff;
+        line-height: 1;
+        cursor: pointer;
+
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
+
+        &--error {
+          background-color: $notice-error;
+
+          &:hover {
+            background-color: darken($notice-error, 10%);
+          }
+        }
+
+        &--success {
+          background-color: $notice-success;
+
+          &:hover {
+            background-color: darken($notice-success, 10%);
+          }
+        }
+      }
     }
   }
 }

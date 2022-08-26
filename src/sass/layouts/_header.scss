@@ -13,7 +13,6 @@ body {
 
             .left {
                 width: 100%;
-                color: #fff;
 
                 h1 {
                     margin: 0;
@@ -26,6 +25,11 @@ body {
                     font-weight: 400;
                     margin: 0;
                     font-size: 18px;
+                }
+
+                a {
+                    color: #fff;
+                    text-decoration: none;
                 }
             }
         }

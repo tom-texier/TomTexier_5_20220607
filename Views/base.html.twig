@@ -13,8 +13,8 @@
     <header id="main-header">
         <div class="container">
             <div class="left">
-                <h1>Tom Texier</h1>
-                <h2>Le développeur qu'il vous faut !</h2>
+                <h1><a href="/">Tom Texier</a></h1>
+                <h2><a href="/">Le développeur qu'il vous faut !</a></h2>
             </div>
             <div class="right">
                 <div class="toggleMenu" id="toggleMenu">
@@ -54,8 +54,33 @@
         {% block body %}{% endblock %}
     </main>
 
-    <footer>
-
+    <footer id="main-footer">
+        <div class="footer">
+            <div class="container">
+                <div class="col infos">
+                    <h3>Tom Texier</h3>
+                    <h4>Le développeur qu'il vous faut !</h4>
+                </div>
+                <div class="col links">
+                    <h3>Liens utiles</h3>
+                    <ul>
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/articles/">Mes articles</a></li>
+                        <li><a href="/contactez-moi/">Contact</a></li>
+                        <li><a href="/admin/" target="_blank">Console d'administration</a></li>
+                    </ul>
+                </div>
+                <div class="col rs">
+                    <h3>Suivez-moi</h3>
+                    <ul>
+                        <li><a href="https://github.com/tom-texier" target="_blank"><i class="fab fa-github"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>Copyright &copy; 2022 - Conception : Tom Texier</p>
+        </div>
     </footer>
 
     <script src="/assets/js/blog_php.js"></script>

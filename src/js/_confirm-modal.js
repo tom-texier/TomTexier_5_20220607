@@ -12,8 +12,8 @@ function createModal()
         <div class="modal-content">
             <p class="text"></p>
             <div class="actions">
-                <div class="close actions--error" role="button">Annuler</div>
-                <div class="actions--success"><a href="" class="url"></a></div>
+                <div class="close action action--error" role="button">Annuler</div>
+                <a href="" class="url action action--success"></a>
             </div>
         </div>
     `;
@@ -43,8 +43,8 @@ function openModal(e)
     }
 
     document.getElementById('confirm-modal').querySelector('p.text').textContent = "Êtes-vous sûr de vouloir " + title.toLowerCase() + ' ?';
-    document.getElementById('confirm-modal').querySelector('.actions--success .url').textContent = title;
-    document.getElementById('confirm-modal').querySelector('.actions--success .url').setAttribute('href', url_action);
+    document.getElementById('confirm-modal').querySelector('.action--success.url').textContent = title;
+    document.getElementById('confirm-modal').querySelector('.action--success.url').setAttribute('href', url_action);
 
     document.getElementById('confirm-modal').classList.add('show');
 }
