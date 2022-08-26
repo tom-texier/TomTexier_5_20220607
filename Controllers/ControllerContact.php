@@ -51,9 +51,6 @@ class ControllerContact extends Controller
             $body
         );
 
-        $headers = "From:" . Configuration::get('noreply_email') . "\n";
-        $headers .= "Reply-To:" . $email . "\n";
-
         $phpmailer->setFrom($from);
         $phpmailer->addAddress($to);
         $phpmailer->addReplyTo($email);
