@@ -24,6 +24,26 @@
 
             .texte {
                 text-align: right;
+
+                .button-cv {
+                    padding: 10px 30px;
+                    border-radius: 15px;
+                    text-decoration: none;
+                    line-height: 0;
+                    background-color: $primary-color;
+                    transition: .4s ease;
+                    color: #fff;
+                    margin-top: 20px;
+                    display: inline-block;
+
+                    i {
+                        margin-right: 10px;
+                    }
+
+                    &:hover {
+                        background-color: $accent-color;
+                    }
+                }
             }
         }
     }
