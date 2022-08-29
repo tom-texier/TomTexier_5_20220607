@@ -4,7 +4,6 @@ node_modules
 /public/assets/img/posts/
 .DS_Store
 dev.ini
-/composer.lock
 /yarn.lock
 /public/assets/blog_php.[a-z0-9]*.hot-update.js
 /public/assets/blog_php.[a-z0-9]*.hot-update.json
