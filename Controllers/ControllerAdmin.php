@@ -206,14 +206,7 @@ class ControllerAdmin extends ControllerSecured
 
     public function addUser()
     {
-        if(
-            $this->request->existsParam('username') ||
-            $this->request->existsParam('email') ||
-            $this->request->existsParam('password') ||
-            $this->request->existsParam('confirm_password') ||
-            $this->request->existsParam('role') ||
-            $this->request->existsParam('submit')
-        ) {
+        if($this->haveUserParam()) {
             $username = $this->request->getParam('username');
             $email = $this->request->getParam('email');
             $password = $this->request->getParam('password');
@@ -288,14 +281,7 @@ class ControllerAdmin extends ControllerSecured
         if(!$user)
             $this->redirect('admin', 'usersManagement', ['error' => 'Cet utilisateur n\'existe pas.']);
 
-        if(
-            $this->request->existsParam('username') ||
-            $this->request->existsParam('email') ||
-            $this->request->existsParam('password') ||
-            $this->request->existsParam('confirm_password') ||
-            $this->request->existsParam('role') ||
-            $this->request->existsParam('submit')
-        ) {
+        if($this->haveUserParam()) {
             $username = $this->request->getParam('username');
             $email = $this->request->getParam('email');
             $password = $this->request->getParam('password');
@@ -371,6 +357,25 @@ class ControllerAdmin extends ControllerSecured
                 'user' => $user
             ]);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function haveUserParam(): bool
+    {
+        if(
+            $this->request->existsParam('username') ||
+            $this->request->existsParam('email') ||
+            $this->request->existsParam('password') ||
+            $this->request->existsParam('confirm_password') ||
+            $this->request->existsParam('role') ||
+            $this->request->existsParam('submit')
+        ) {
+            return true;
+        }
+
+        return false
     }
 
     //======================== Gestion des commentaires ======================
