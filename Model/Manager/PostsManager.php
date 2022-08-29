@@ -94,4 +94,3 @@ class PostsManager extends Model
         return $result['numberPosts'];
     }
 }
-
