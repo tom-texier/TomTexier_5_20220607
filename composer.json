@@ -1,6 +1,7 @@
 {
     "name": "ttexier/blog-php",
     "description": "Développeur PHP/Symfony - Projet 5",
+    "license": "proprietary",
     "autoload": {
         "psr-4": {
             "Texier\\Framework\\" : "Framework/",
