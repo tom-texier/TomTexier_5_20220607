@@ -1,6 +1,5 @@
 vendor
 node_modules
-.idea
 /public/assets/img/posts/
 .DS_Store
 dev.ini
