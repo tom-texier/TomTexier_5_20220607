@@ -12,6 +12,10 @@
     .col {
       color: #fff;
 
+      a {
+        transition: .4s ease;
+      }
+
       > h3 {
         font-size: 30px;
         margin: 0;

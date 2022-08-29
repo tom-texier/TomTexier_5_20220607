@@ -91,6 +91,10 @@
             background-color: $primary-color;
             transition: .4s ease;
 
+            &:hover {
+                background-color: darken($primary-color, 10%);
+            }
+
             i {
                 margin-left: 10px;
             }
