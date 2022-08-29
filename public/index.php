@@ -23,12 +23,6 @@ try {
     $router->routingRequest();
 }
 catch(\Exception $exception) {
-    $loader = new FilesystemLoader(Configuration::get('rootPath') . 'Views');
-    $twig = new Environment($loader);
-    $twig->display('error.html.twig', [
-        'msgError'  => $exception->getMessage(),
-        'file'      => $exception->getFile(),
-        'line'      => $exception->getLine(),
-        'traces'     => $exception->getTrace()
-    ]);
+    $rootWeb = Configuration::get("rootWeb", "/");
+    header("Location:" . $rootWeb . "error/404");
 }
