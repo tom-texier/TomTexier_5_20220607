@@ -375,7 +375,7 @@ class ControllerAdmin extends ControllerSecured
             return true;
         }
 
-        return false
+        return false;
     }
 
     //======================== Gestion des commentaires ======================
