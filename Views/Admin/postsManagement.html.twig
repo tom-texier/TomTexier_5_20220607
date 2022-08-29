@@ -21,6 +21,10 @@
             Aucun article trouvé
         </div>
     {% else %}
+        <span class="numberItems">
+            {{ numberPosts <= 1 ? [numberPosts, " article trouvé"]|join : [numberPosts, " articles trouvés"]|join }}
+        </span>
+
         <div class="table">
             <div class="head">
                 <div class="row">

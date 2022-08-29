@@ -21,6 +21,10 @@
             Aucun commentaire trouvé
         </div>
     {% else %}
+        <span class="numberItems">
+            {{ numberComments <= 1 ? [numberComments, " commentaire trouvé"]|join : [numberComments, " commentaires trouvés"]|join }}
+        </span>
+
         <div class="table">
             <div class="head">
                 <div class="row">

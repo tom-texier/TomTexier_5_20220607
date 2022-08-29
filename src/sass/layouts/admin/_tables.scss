@@ -1,8 +1,18 @@
 .administration .table {
+  @include responsiveWidth(768px) {
+    width: 100%;
+    overflow-x: auto;
+  }
+
   .head {
     border: 1px solid #ececec;
     background-color: #ffffff;
     border-radius: 15px;
+
+    @include responsiveWidth(768px) {
+      border-radius: 0;
+      border: none;
+    }
 
     .row {
       font-weight: 600;
@@ -19,13 +29,49 @@
     border-radius: 15px;
     border: 1px solid #ececec;
     margin-top: 20px;
+
+    @include responsiveWidth(768px) {
+      border-radius: 0;
+      border: none;
+    }
   }
 
   .row {
     display: flex;
 
+    @include responsiveWidth(768px) {
+      display: inline-flex;
+      border-bottom: 1px solid #ececec;
+
+      &:first-child {
+        border-top: 1px solid #ececec;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+      }
+    }
+
     &:not(:last-child) {
       border-bottom: 1px solid #ececec;
+    }
+
+    @include responsiveWidth(768px) {
+      &:first-child .cell:first-child {
+        border-top-left-radius: 15px;
+      }
+      &:first-child .cell:last-child {
+        border-top-right-radius: 15px;
+      }
+      &:last-child .cell:first-child {
+        border-bottom-left-radius: 15px;
+      }
+      &:last-child .cell:last-child {
+        border-bottom-right-radius: 15px;
+      }
     }
 
     .cell {
@@ -37,9 +83,26 @@
       justify-content: center;
       font-size: 14px;
       text-align: center;
+      word-break: break-all;
+
+      @include responsiveWidth(768px) {
+        width: 250px;
+        flex: unset;
+        background-color: #fff;
+      }
 
       &:not(:last-child) {
         border-right: 1px solid #ececec;
+      }
+
+      @include responsiveWidth(768px) {
+        &:last-child {
+          border-right: 1px solid #ececec;
+        }
+
+        &:first-child {
+          border-left: 1px solid #ececec;
+        }
       }
 
       .info {

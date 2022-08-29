@@ -22,7 +22,15 @@ class ControllerAdmin extends ControllerSecured
 
     public function index()
     {
-        $this->generateView();
+        $numberItems = [
+            'posts' => $this->postsManager->count(),
+            'users' => $this->usersManager->count(),
+            'comments' => $this->commentsManager->count(),
+        ];
+
+        $this->generateView([
+            'numberItems' => $numberItems
+        ]);
     }
 
     //======================== Gestion des posts ======================

@@ -9,6 +9,12 @@
     flex-wrap: wrap;
     justify-content: space-between;
 
+    @include responsiveWidth(768px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+    }
+
     .col {
       color: #fff;
 
@@ -20,6 +26,10 @@
         font-size: 30px;
         margin: 0;
         line-height: 1;
+
+        @include responsiveWidth(768px) {
+          text-align: center;
+        }
       }
 
       &.infos {
@@ -32,12 +42,23 @@
           margin: 0;
           font-size: 20px;
           font-weight: 400;
+
+          @include responsiveWidth(768px) {
+            text-align: center;
+          }
         }
       }
 
       ul {
         list-style-type: none;
         padding: 0;
+        margin-bottom: 0;
+
+        @include responsiveWidth(768px) {
+          li {
+            text-align: center;
+          }
+        }
 
         a {
           color: #fff;

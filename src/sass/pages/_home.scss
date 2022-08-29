@@ -5,13 +5,26 @@
             font-weight: 400;
             text-align: right;
             margin: 0;
+
+            @include responsiveWidth(768px) {
+                text-align: center;
+            }
         }
 
         .row {
             display: flex;
 
+            @include responsiveWidth(768px) {
+                flex-direction: column;
+                align-items: center;
+            }
+
             .profil {
                 margin-right: 30px;
+
+                @include responsiveWidth(768px) {
+                    margin-right: 0;
+                }
                 
                 img {
                     object-fit: cover;
@@ -24,6 +37,10 @@
 
             .texte {
                 text-align: right;
+
+                @include responsiveWidth(768px) {
+                    text-align: center;
+                }
 
                 .button-cv {
                     padding: 10px 30px;

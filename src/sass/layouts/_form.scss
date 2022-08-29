@@ -31,6 +31,10 @@
 
     &.w-50 {
       width: calc(50% - 10px);
+
+      @include responsiveWidth(425px) {
+        width: 100%;
+      }
     }
 
     &__title input {
