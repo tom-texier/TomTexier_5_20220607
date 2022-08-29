@@ -10,7 +10,7 @@ abstract class Model
 
     private static function getDb()
     {
-        if(self::$db == null) {
+        if(self::$db === null) {
             $dsn = Configuration::get("dsn");
             $username = Configuration::get("username");
             $password = Configuration::get("password");
