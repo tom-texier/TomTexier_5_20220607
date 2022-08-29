@@ -1,7 +1,6 @@
 vendor
 node_modules
 /public/assets/img/posts/
-.DS_Store
 dev.ini
 /yarn.lock
 /public/assets/blog_php.[a-z0-9]*.hot-update.js
