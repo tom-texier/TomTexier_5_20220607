@@ -62,3 +62,6 @@ Pour l'envoi des emails de contacte (valeurs d'exemple dans dev-sample.ini) :
 
 
 **Etape 6 :** Le site est installé. Vous pouvez vous connecter en tant qu'admin avec les identifiants ci-dessous
+
+*Email : admin@admin.fr*<br>
+*Mot de passe : 1adminadmin* 
