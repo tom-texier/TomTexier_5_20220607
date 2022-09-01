@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Mes articles{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <section class="postsGrid">
+            <h1>Mes articles</h1>
+            {% if posts %}
+                <div class="grid">
+                    {% for post in posts %}
+                        <article>
+                            <a href="/article/{{ post.id }}">
+                                <img src="/assets/img/posts/{{ post.image }}" alt="{{ post.title }}">
+                                <div class="content">
+                                    <div class="left">
+                                        <p class="date">{{ post.createdAt | date("d/m/Y") }}</p>
+                                        <h2>{{ post.title }}</h2>
+                                    </div>
+                                    <div class="right">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 541 392.17">
+                                            <path d="M371.68,617.67a19,19,0,0,0,13.43-5.51l179.22-177a19.11,19.11,0,0,0-.1-27.27l-181.45-177a19.1,19.1,0,0,0-26.67,27.35L486.64,385.59,497.28,396l2.66,2.59,5.32,5.19H46.84a17.84,17.84,0,0,0,0,35.68H505.66l-5.25,5.18-2.62,2.58-10.48,10.36L358.26,585a19.14,19.14,0,0,0-.16,27A18.94,18.94,0,0,0,371.68,617.67Z" transform="translate(-29 -225.5)">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="notice notice__info">
+                    Aucun article n'a été créé pour le moment.
+                </div>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}

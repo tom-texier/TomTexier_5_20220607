@@ -1,0 +1,30 @@
+.notice {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid;
+  font-size: 15px;
+  margin-bottom: 20px;
+
+  &:first-child {
+    margin-top: 20px;
+  }
+
+  &__error {
+    border-color: $notice-error;
+    color: $notice-error;
+    background-color: rgba(185, 25, 25, .1)
+  }
+
+  &__success {
+    border-color: $notice-success;
+    color: $notice-success;
+    background-color: rgba(106,168,79, .1);
+  }
+
+  &__info {
+    border-color: $notice-info;
+    color: $notice-info;
+    background-color: rgba(61,133,198, .1);
+  }
+}

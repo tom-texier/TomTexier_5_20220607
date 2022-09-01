@@ -18,14 +18,13 @@ class Request
         return !empty($this->params[$name]);
     }
 
-    public function getParam(string $name): mixed
+    public function getParam(string $name)
     {
-        if ($this->existsParameter($name)) {
-			return htmlspecialchars($this->parameters[$name]);
-		}
-		else {
-			throw new \Exception("Paramètre '$name' absent de la requête");
-		}
+        if ($this->existsParam($name)) {
+			return htmlspecialchars($this->params[$name]);
+        }
+        
+        return false;
     }
 
     public function getSession()

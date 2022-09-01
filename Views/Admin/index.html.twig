@@ -1,0 +1,24 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Console d'administration{% endblock %}
+
+{% block class_body %}administration dashboard{% endblock %}
+
+{% block container %}
+    <h1>Tableau de bord</h1>
+
+    <div class="links-to-menus">
+        <a class="link" href="/admin/postsManagement">
+            <span class="icon"><i class="fa-solid fa-newspaper"></i></span>
+            <span class="text">{{ numberItems.posts <= 1 ? [numberItems.posts, " article"]|join : [numberItems.posts, " articles"]|join }}</span>
+        </a>
+        <a class="link" href="/admin/commentsManagement">
+            <span class="icon"><i class="fa-solid fa-comments"></i></span>
+            <span class="text">{{ numberItems.comments <= 1 ? [numberItems.comments, " commentaire"]|join : [numberItems.comments, " commentaires"]|join }}</span>
+        </a>
+        <a class="link" href="/admin/usersManagement">
+            <span class="icon"><i class="fa-solid fa-users"></i></span>
+            <span class="text">{{ numberItems.users <= 1 ? [numberItems.users, " utilisateur"]|join : [numberItems.users, " utilisateurs"]|join }}</span>
+        </a>
+    </div>
+{% endblock %}

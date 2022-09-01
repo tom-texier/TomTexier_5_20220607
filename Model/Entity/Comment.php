@@ -2,6 +2,8 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Manager\PostsManager;
+use App\Model\Manager\UsersManager;
 use Texier\Framework\Entity;
 
 class Comment extends Entity
@@ -11,69 +13,92 @@ class Comment extends Entity
     const VALIDATED = 2;
 
     private int $id;
-    private int $userID;
-    private int $postID;
+    private User $author;
+    private Post $post;
     private string $content;
     private \DateTime $createdAt;
     private int $status;
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getUserID()
+    public function getAuthor(): User
     {
-        return $this->userID;
+        return $this->author;
     }
 
-    public function getPostID()
+    public function getPost(): Post
     {
-        return $this->postID;
+        return $this->post;
     } 
 
-    public function getContent()
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
 
-    public function setId(int $id)
+    public function setId($id)
     {
+        if(!is_int($id)) {
+            $id = intval($id);
+        }
         $this->id = $id;
     }
 
-    public function setUserID(int $userID)
+    /**
+     * @param int|string $authorId
+     * @return void
+     */
+    public function setAuthor($authorId)
     {
-        $this->userID = $userID;
+        if(!is_int($authorId)) {
+            $authorId = intval($authorId);
+        }
+
+        $usersManager = new UsersManager();
+        $this->author = $usersManager->get($authorId);
     }
 
-    public function setPostID(int $postID)
+    public function setPost($postId)
     {
-        $this->postID = $postID;
+        if(!is_int($postId)) {
+            $postId = intval($postId);
+        }
+
+        $postManager = new PostsManager();
+        $this->post = $postManager->get($postId);
     }
 
-    public function setContent(string $content)
+    public function setContent($content)
     {
         $this->content = $content;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt($createdAt)
     {
+        if(!$createdAt instanceof \DateTime) {
+            $createdAt = new \DateTime($createdAt);
+        }
         $this->createdAt = $createdAt;
     }
 
-    public function setStatus(int $status)
+    public function setStatus($status)
     {
+        if(!is_int($status)) {
+            $status = intval($status);
+        }
         $this->status = $status;
     }
 }

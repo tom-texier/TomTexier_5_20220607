@@ -1,6 +1,7 @@
 {
     "name": "ttexier/blog-php",
     "description": "Développeur PHP/Symfony - Projet 5",
+    "license": "proprietary",
     "autoload": {
         "psr-4": {
             "Texier\\Framework\\" : "Framework/",
@@ -9,6 +10,8 @@
         }
     },
     "require": {
-        "twig/twig": "^3.4"
+        "twig/twig": "^3.4",
+        "ext-pdo": "*",
+        "phpmailer/phpmailer": "^6.6"
     }
 }

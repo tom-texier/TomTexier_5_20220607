@@ -1,0 +1,112 @@
+#sideMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 400px;
+    max-width: 100%;
+    transform: translateX(-100%);
+    transition: transform .4s ease;
+    background-color: #fff;
+    padding-top: 70px;
+    border-right: 1px solid #ececec;
+
+    &.open {
+        transform: translateX(0);
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: #000;
+        font-size: 40px;
+        cursor: pointer;
+        transition: .4s ease;
+
+        &:hover {
+            color: $accent-color;
+        }
+    }
+
+    .main-menu {
+        list-style-type: none;
+        padding: 0 20px;
+
+        a {
+            display: block;
+            padding: 10px;
+            color: $text-color;
+            text-decoration: none;
+            transition: .4s ease;
+
+            &:hover {
+                color: $accent-color;
+            }
+        }
+    }
+
+    .login-menu {
+        margin: auto;
+        width: calc(100% - 40px);
+
+        .logged-user {
+            padding: 20px 10px;
+            border-top: 1px solid #ececec;
+            border-bottom: 1px solid #ececec;
+
+            i {
+                margin-right: 10px;
+            }
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+
+            a {
+                display: block;
+                padding: 10px;
+                color: $text-color;
+                text-decoration: none;
+                transition: .4s ease;
+
+                &:hover {
+                    color: $accent-color;
+                }
+
+                i {
+                    margin-right: 10px;
+                }
+            }
+        }
+
+        .button {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 15px;
+            color: #fff;
+            background-color: $primary-color;
+            transition: .4s ease;
+
+            &:hover {
+                background-color: darken($primary-color, 10%);
+            }
+
+            i {
+                margin-left: 10px;
+            }
+
+            &--logout {
+                background-color: $notice-error;
+
+                &:hover {
+                    background-color: darken($notice-error, 10%);
+                }
+            }
+        }
+    }
+
+}

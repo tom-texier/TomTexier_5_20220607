@@ -1,0 +1,38 @@
+{
+    // the primary locale of the app as a valid HTML language attribute
+    // (see https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang)
+    "lang": "fr-FR",
+
+    // the name of the web application as it is usually displayed to the user
+    "name": "Blog PHP Symfony",
+    // a shorter variant of the app name to be displayed when there is not
+    // enough space (e.g. as a label for an icon on the phone home screen).
+    "short_name": "Blog PHP",
+
+    // use it to explain what the application does
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+
+    // a relative path (/app/), a host name (https://example.com/) or a subdirectory
+    // (https://example.com/app/) where the manifest is applied to. Any URL outside
+    // of this scope will revert to a normal web page inside a browser tab or window.
+    "scope": "/",
+
+    // the preferred orientation of the web app contents
+    // (see https://developer.mozilla.org/en-US/docs/Web/Manifest/orientation)
+    "orientation": "landscape",
+
+    // determines how much of browser interface is displayed when running the app
+    // "browser" = display the full browser window; "fullscreen" = display no browser interface
+    // (see https://developer.mozilla.org/en-US/docs/Web/Manifest/display)
+    "display": "fullscreen",
+
+    // the placeholder background color used for the app before its stylesheet is loaded
+    // Once the stylesheet is loaded, the real background color from the app is used
+    "background_color": "#ffffff",
+
+    // an array of objects representing image files that can serve as app icons for different contexts
+    // (see https://developer.mozilla.org/en-US/docs/Web/Manifest/icons)
+    "icons": [
+        { "src": "/favicon.ico" },
+    ]
+}

@@ -1,0 +1,66 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Tous les articles{% endblock %}
+
+{% block container %}
+    <h1>Tous les articles</h1>
+
+    {% if error_message %}
+        <div class="notice notice__error">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    {% if success_message %}
+        <div class="notice notice__success">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
+    {% if not posts %}
+        <div class="notice notice__info">
+            Aucun article trouvé
+        </div>
+    {% else %}
+        <span class="numberItems">
+            {{ numberPosts <= 1 ? [numberPosts, " article trouvé"]|join : [numberPosts, " articles trouvés"]|join }}
+        </span>
+
+        <div class="table">
+            <div class="head">
+                <div class="row">
+                    <div class="cell">Identifiant</div>
+                    <div class="cell">Titre</div>
+                    <div class="cell">Créé le</div>
+                    <div class="cell">Auteur</div>
+                    <div class="cell">Dernière modification</div>
+                    <div class="cell"></div>
+                </div>
+            </div>
+            <div class="content">
+                {% for post in posts %}
+                    <div class="row">
+                        <div class="cell">#{{ post.id }}</div>
+                        <div class="cell">{{ post.title|length > 60 ? [post.title[0:60], '...']|join : post.title }}</div>
+                        <div class="cell">{{ post.createdAt | date("d/m/Y à H:i") }}</div>
+                        <div class="cell">
+                            {{ post.author.username }}
+                            <span class="info">({{ post.author.email }})</span>
+                        </div>
+                        <div class="cell">{{ post.updatedAt ? post.updatedAt|date("d/m/Y à H:i") : '' }}</div>
+                        <div class="cell">
+                            <div class="actions">
+                                <a href="/article/{{ post.id }}" target="_blank" title="Voir l'article"><i class="fas fa-eye"></i></a>
+                                <a href="/admin/editPost/{{ post.id }}" title="Modifier l'article"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="/admin/deletePost/{{ post.id }}" title="Supprimer l'article" data-confirm="true"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <a class="stickyButton stickyButton--add" href="/admin/addPost" title="Ajouter un article">
+        <i class="fas fa-plus"></i>
+    </a>
+{% endblock %}

@@ -16,63 +16,90 @@ class User extends Entity
     private int $role;
     private \DateTime $createdAt;
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getUsername()
+    /**
+     * @return string
+     */
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    public function getEmail()
+    /**
+     * @return string
+     */
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function getPassword()
+    /**
+     * @return string
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function getRole()
+    /**
+     * @return int
+     */
+    public function getRole(): int
     {
         return $this->role;
     }
 
-    public function getCreatedAt()
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function setId(int $id)
+    public function setId($id)
     {
+        if(!is_int($id)) {
+            $id = intval($id);
+        }
         $this->id = $id;
     }
 
-    public function setUsername(string $username)
+    public function setUsername($username)
     {
         $this->username = $username;
     }
 
-    public function setEmail(string $email)
+    public function setEmail($email)
     {
         $this->email = $email;
     }
 
-    public function setPassword(string $password)
+    public function setPassword($password)
     {
         $this->password = $password;
     }
 
-    public function setRole(int $role)
+    public function setRole($role)
     {
+        if(!is_int($role)) {
+            $role = intval($role);
+        }
         $this->role = $role;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt($createdAt)
     {
+        if(!$createdAt instanceof \DateTime) {
+            $createdAt = new \DateTime($createdAt);
+        }
         $this->createdAt = $createdAt;
     }
 }

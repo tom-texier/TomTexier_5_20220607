@@ -1,0 +1,23 @@
+.stickyButton {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-size: 20px;
+  transition: .4s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &--add {
+    background-color: $accent-color;
+    color: #fff;
+  }
+}

@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Erreur {{ status_code ?: '' }}{% endblock %}
+
+{% block class_body %}error-page{% endblock %}
+
+{% block body %}
+    <section>
+        <div class="container">
+            <h1>Erreur {{ status_code ?: '' }}</h1>
+            <p>{{ error_message }}</p>
+        </div>
+    </section>
+{% endblock %}

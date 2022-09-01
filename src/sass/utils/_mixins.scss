@@ -1,0 +1,5 @@
+@mixin responsiveWidth($max-width) {
+    @media (max-width: $max-width) {
+        @content;
+    }
+}

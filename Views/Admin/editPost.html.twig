@@ -1,0 +1,51 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Modifier l'article{% endblock %}
+
+{% block container %}
+    <h1>Modifier l'article</h1>
+
+    {% if error_message %}
+        <div class="notice notice__error">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    {% if success_message %}
+        <div class="notice notice__success">
+            {{ success_message }}
+        </div>
+    {% endif %}
+
+    <form method="post" action="/admin/editPost/{{ post.id }}" class="form-action" enctype="multipart/form-data">
+        <div class="form-content">
+            <div class="form-group form-group__title">
+                <label for="title">Titre<span class="required">*</span></label>
+                <input type="text" name="title" id="title" value="{{ post.title }}" required>
+            </div>
+            <div class="form-group form-group__image">
+                <div class="image-upload-preview {{ post.image != '' ? 'active' : '' }}"><img src="/assets/img/posts/{{ post.image }}"></div>
+                <div class="label">
+                    <label for="image"><i class="fas fa-upload"></i> Sélectionner une image</label>
+                    <span class="name-preview"></span>
+                </div>
+                <input type="file" name="image" id="image">
+            </div>
+            <div class="form-group form-group__content">
+                <label for="content">Contenu<span class="required">*</span></label>
+                <textarea id="content" name="content" required>{{ post.content }}</textarea>
+            </div>
+            <div class="form-group form-group__select">
+                <label for="author">Auteur<span class="required">*</span></label>
+                <select name="author" id="author" required>
+                    <option selected disabled>Choisir un auteur</option>
+                    {% for user in users %}
+                        <option {{ post.author.id == user.id ? 'selected' : '' }} value="{{ user.id }}">{{ user.username }} ({{ user.email }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Mettre à jour" class="submit" name="submit">
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,74 @@
+#confirm-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  display: none;
+
+  &.show {
+    display: flex;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .6);
+    z-index: -1;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    border: 1px solid #ececec;
+    border-radius: 15px;
+    padding: 20px;
+    width: 500px;
+    max-width: calc(100% - 20px);
+
+    .text {
+      font-size: 18px;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .action {
+        text-align: center;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 15px;
+        color: #fff;
+        line-height: 1;
+        cursor: pointer;
+
+        &--error {
+          background-color: $notice-error;
+
+          &:hover {
+            background-color: darken($notice-error, 10%);
+          }
+        }
+
+        &--success {
+          background-color: $notice-success;
+
+          &:hover {
+            background-color: darken($notice-success, 10%);
+          }
+        }
+      }
+    }
+  }
+}

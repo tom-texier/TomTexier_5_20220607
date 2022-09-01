@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    padding: 0;
+    color: $text-color;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.preload, .preload * {
+    transition: none!important;
+}
+
+.container {
+    max-width: 1200px;
+    padding: 0 10px;
+    margin: auto;
+}
+
+::selection {
+    background-color: rgba(241, 153, 83, .5)
+}
+
+body:not(.administration) main {
+    min-height: 60vh;
+    padding: 50px 0;
+}

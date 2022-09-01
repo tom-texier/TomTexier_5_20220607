@@ -13,7 +13,7 @@ class Configuration
 
     private static function getParams()
     {
-        if(self::$params == null) {
+        if(self::$params === null) {
             $pathFile = "../config/prod.ini";
 
             if(!file_exists($pathFile)) {
