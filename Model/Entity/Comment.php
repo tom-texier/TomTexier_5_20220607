@@ -19,36 +19,58 @@ class Comment extends Entity
     private \DateTime $createdAt;
     private int $status;
 
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @return User
+     */
     public function getAuthor(): User
     {
         return $this->author;
     }
 
+    /**
+     * @return Post
+     */
     public function getPost(): Post
     {
         return $this->post;
-    } 
+    }
 
+    /**
+     * @return string
+     */
     public function getContent(): string
     {
         return $this->content;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
+    /**
+     * @return int
+     */
     public function getStatus(): int
     {
         return $this->status;
     }
 
+    /**
+     * @param $id
+     * @return void
+     */
     public function setId($id)
     {
         if(!is_int($id)) {
@@ -71,6 +93,10 @@ class Comment extends Entity
         $this->author = $usersManager->get($authorId);
     }
 
+    /**
+     * @param $postId
+     * @return void
+     */
     public function setPost($postId)
     {
         if(!is_int($postId)) {
@@ -81,11 +107,20 @@ class Comment extends Entity
         $this->post = $postManager->get($postId);
     }
 
+    /**
+     * @param $content
+     * @return void
+     */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+    /**
+     * @param $createdAt
+     * @return void
+     * @throws \Exception
+     */
     public function setCreatedAt($createdAt)
     {
         if(!$createdAt instanceof \DateTime) {
@@ -94,6 +129,10 @@ class Comment extends Entity
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * @param $status
+     * @return void
+     */
     public function setStatus($status)
     {
         if(!is_int($status)) {

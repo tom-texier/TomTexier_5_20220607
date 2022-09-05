@@ -3,7 +3,9 @@
 namespace Texier\Framework;
 
 use Twig\Environment;
-use Twig\Extension\DebugExtension;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
 class View
@@ -14,6 +16,12 @@ class View
     private FilesystemLoader $loader;
     private Environment $twig;
 
+    /**
+     * Constructeur de classe. Initialise et configure l'environnement Twig.
+     * @param string $path
+     * @param string $action
+     * @param $controller
+     */
     public function __construct(string $path, string $action, $controller = "")
     {
         if(strpos($path, '/', -1) === false && strpos($path, '\\', -1) === false) {
@@ -21,10 +29,7 @@ class View
         }
 
         $this->loader = new FilesystemLoader($path);
-        $this->twig = new Environment($this->loader, [
-            'debug' => true
-        ]);
-        $this->twig->addExtension(new DebugExtension());
+        $this->twig = new Environment($this->loader);
 
         $path = "";
 
@@ -34,6 +39,14 @@ class View
         $this->file = $path . $action . ".html.twig";
     }
 
+    /**
+     * Génère la vue
+     * @param array $data
+     * @return void
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function generate(array $data)
     {
         $this->twig->addGlobal('session', $_SESSION);

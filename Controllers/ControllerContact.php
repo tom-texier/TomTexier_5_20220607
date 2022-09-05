@@ -6,12 +6,17 @@ use Texier\Framework\Controller;
 
 class ControllerContact extends Controller
 {
+    /**
+     * Génère la page Contact
+     * @return void
+     */
     public function index()
     {
         $this->generateView();
     }
 
     /**
+     * Envoi un mail par PHPMailer
      * @return void
      * @throws \PHPMailer\PHPMailer\Exception
      */

@@ -8,8 +8,9 @@ use Texier\Framework\Model;
 class PostsManager extends Model
 {
     /**
-     * Obtenir la liste des posts
+     * Retourne la liste de tous les posts
      * @return Post[]
+     * @throws \Exception
      */
     public function getList(): array
     {
@@ -28,8 +29,10 @@ class PostsManager extends Model
     }
 
     /**
+     * Retourne un post
      * @param int $postId
      * @return Post|false
+     * @throws \Exception
      */
     public function get(int $postId)
     {
@@ -47,8 +50,10 @@ class PostsManager extends Model
     }
 
     /**
+     * Ajoute un post
      * @param Post $post
      * @return false|\PDOStatement
+     * @throws \Exception
      */
     public function add(Post $post)
     {
@@ -63,6 +68,12 @@ class PostsManager extends Model
         ]);
     }
 
+    /**
+     * Supprimer un post
+     * @param int $postId
+     * @return false|\PDOStatement
+     * @throws \Exception
+     */
     public function delete(int $postId)
     {
         $sql = "DELETE FROM posts WHERE id = ?";
@@ -70,6 +81,12 @@ class PostsManager extends Model
         return $this->executeRequest($sql, [$postId]);
     }
 
+    /**
+     * Mettre à jour un post
+     * @param Post $post
+     * @return false|\PDOStatement
+     * @throws \Exception
+     */
     public function update(Post $post)
     {
         $sql = "UPDATE posts
@@ -86,6 +103,11 @@ class PostsManager extends Model
         ]);
     }
 
+    /**
+     * Retourne le nombre de posts
+     * @return mixed
+     * @throws \Exception
+     */
     public function count()
     {
         $sql = "SELECT COUNT(*) as numberPosts FROM posts";

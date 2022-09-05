@@ -10,6 +10,11 @@ class Router
     const DEFAULT_CONTROLLER = 'Home';
     const DEFAULT_ACTION = 'index';
 
+    /**
+     * Traite la requête et exécute l'action demandée
+     * @return void
+     * @throws \Exception
+     */
     public function routingRequest()
     {
         $request = new Request($_REQUEST);
@@ -20,7 +25,13 @@ class Router
         $controller->executeAction($action);
     }
 
-    private function createController(Request $request)
+    /**
+     * Retourne le controller demandé
+     * @param Request $request
+     * @return Controller
+     * @throws \Exception
+     */
+    private function createController(Request $request): Controller
     {
         $controller = self::DEFAULT_CONTROLLER;
 
@@ -47,6 +58,11 @@ class Router
         }
     }
 
+    /**
+     * Retourne l'action demandée
+     * @param Request $request
+     * @return false|string
+     */
     private function createAction(Request $request)
     {
         $action = self::DEFAULT_ACTION;

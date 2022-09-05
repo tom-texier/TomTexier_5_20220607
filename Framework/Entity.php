@@ -4,11 +4,20 @@ namespace Texier\Framework;
 
 abstract class Entity
 {
+    /**
+     * Constructeur de classe
+     * @param array $data
+     */
     public function __construct(array $data)
     {
         $this->hydrate($data);
     }
 
+    /**
+     * Hydratation des instances
+     * @param array $data
+     * @return void
+     */
     public function hydrate(array $data)
     {
         foreach ($data as $key => $value) {

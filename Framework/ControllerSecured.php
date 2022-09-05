@@ -6,6 +6,12 @@ use App\Model\Entity\User;
 
 abstract class ControllerSecured extends Controller
 {
+    /**
+     * Vérifie si l'utilisateur connecté est administrateur
+     * @param $action
+     * @return void
+     * @throws \Exception
+     */
     public function executeAction($action)
     {
         if($this->request->getSession()->existsAttribute('userRole')) {

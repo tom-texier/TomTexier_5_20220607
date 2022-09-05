@@ -9,11 +9,18 @@ class ControllerRegistration extends Controller
 {
     private UsersManager $usersManager;
 
+    /**
+     * Constructeur de classe
+     */
     public function __construct()
     {
         $this->usersManager = new UsersManager();
     }
 
+    /**
+     * Génère la page d'inscription
+     * @return void
+     */
     public function index()
     {
         if($this->request->getSession()->existsAttribute('userID')) {
@@ -23,6 +30,10 @@ class ControllerRegistration extends Controller
         $this->generateView();
     }
 
+    /**
+     * Enregistre un nouvel utilisateur
+     * @return void
+     */
     public function register()
     {
         if($this->request->existsParam("username")

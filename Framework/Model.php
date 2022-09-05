@@ -6,9 +6,15 @@ use PDO;
 
 abstract class Model
 {
+
     private static $db;
 
-    private static function getDb()
+    /**
+     * Retourne l'instance du PDO
+     * @return PDO
+     * @throws \Exception
+     */
+    private static function getDb(): PDO
     {
         if(self::$db === null) {
             $dsn = Configuration::get("dsn");
@@ -21,6 +27,13 @@ abstract class Model
         return self::$db;
     }
 
+    /**
+     * Exécute une requête SQL
+     * @param string $sql Requête SQL à exécuter
+     * @param array $params Paramètres de la requête
+     * @return false|\PDOStatement
+     * @throws \Exception
+     */
     protected function executeRequest(string $sql, array $params = [])
     {
         if(empty($params)) {

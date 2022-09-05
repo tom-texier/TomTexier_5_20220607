@@ -13,6 +13,9 @@ class ControllerAdmin extends ControllerSecured
     private CommentsManager $commentsManager;
     private UsersManager $usersManager;
 
+    /**
+     * Constructeur de classe
+     */
     public function __construct()
     {
         $this->postsManager = new PostsManager();
@@ -20,6 +23,10 @@ class ControllerAdmin extends ControllerSecured
         $this->usersManager = new UsersManager();
     }
 
+    /**
+     * Génère la vue du Tableau de bord
+     * @return void
+     */
     public function index()
     {
         $numberItems = [
@@ -35,6 +42,10 @@ class ControllerAdmin extends ControllerSecured
 
     //======================== Gestion des posts ======================
 
+    /**
+     * Génère la vue de gestion des posts
+     * @return void
+     */
     public function postsManagement()
     {
         $numberPosts = $this->postsManager->count();
@@ -46,6 +57,10 @@ class ControllerAdmin extends ControllerSecured
         ]);
     }
 
+    /**
+     * Génère la vue d'ajout de post
+     * @return void
+     */
     public function addPost()
     {
         if (
@@ -98,6 +113,8 @@ class ControllerAdmin extends ControllerSecured
     }
 
     /**
+     * Génère la vue de modification de post
+     * @return void
      * @throws Exception
      */
     public function editPost()
@@ -159,6 +176,10 @@ class ControllerAdmin extends ControllerSecured
         }
     }
 
+    /**
+     * Suppression d'un post
+     * @return void
+     */
     public function deletePost()
     {
         if(!$this->request->existsParam('id'))
@@ -178,6 +199,10 @@ class ControllerAdmin extends ControllerSecured
 
     //======================== Gestion des utilisateurs ======================
 
+    /**
+     * Génère la vue de gestion des utilisateurs
+     * @return void
+     */
     public function usersManagement()
     {
         $numberUsers = $this->usersManager->count();
@@ -189,6 +214,10 @@ class ControllerAdmin extends ControllerSecured
         ]);
     }
 
+    /**
+     * Suppression d'un utilisateur
+     * @return void
+     */
     public function deleteUser()
     {
         if(!$this->request->existsParam('id'))
@@ -204,6 +233,10 @@ class ControllerAdmin extends ControllerSecured
         $this->redirect('admin', 'usersManagement', ['success' => 'Utilisateur supprimé.']);
     }
 
+    /**
+     * Génère la vue d'ajout d'un utilisateur
+     * @return void
+     */
     public function addUser()
     {
         if($this->haveUserParam()) {
@@ -270,6 +303,10 @@ class ControllerAdmin extends ControllerSecured
         }
     }
 
+    /**
+     * Génère la vue de modification d'un utilisateur
+     * @return void
+     */
     public function editUser()
     {
         if(!$this->request->existsParam('id'))
@@ -360,7 +397,8 @@ class ControllerAdmin extends ControllerSecured
     }
 
     /**
-     * @return bool
+     * Savoir si la requête comporte au moins un paramètre utilisateur
+     * @return bool Retourne vrai si la requête comporte au moins un paramètre utilisateur. Faux sinon.
      */
     public function haveUserParam(): bool
     {
@@ -380,6 +418,10 @@ class ControllerAdmin extends ControllerSecured
 
     //======================== Gestion des commentaires ======================
 
+    /**
+     * Génère la vue de gestion des commentaires
+     * @return void
+     */
     public function commentsManagement()
     {
         $numberComments = $this->commentsManager->count();
@@ -391,6 +433,10 @@ class ControllerAdmin extends ControllerSecured
         ]);
     }
 
+    /**
+     * Valider un commentaire
+     * @return void
+     */
     public function validateComment()
     {
         if(!$this->request->existsParam('id'))
@@ -406,6 +452,10 @@ class ControllerAdmin extends ControllerSecured
         $this->redirect('admin', 'commentsManagement', ['success' => 'Commentaire validé.']);
     }
 
+    /**
+     * Désactiver un commentaire
+     * @return void
+     */
     public function disableComment()
     {
         if(!$this->request->existsParam('id'))
@@ -421,6 +471,10 @@ class ControllerAdmin extends ControllerSecured
         $this->redirect('admin', 'commentsManagement', ['success' => 'Commentaire désactivé.']);
     }
 
+    /**
+     * Supprimer un commentaire
+     * @return void
+     */
     public function deleteComment()
     {
         if(!$this->request->existsParam('id'))
@@ -435,6 +489,10 @@ class ControllerAdmin extends ControllerSecured
         $this->redirect('admin', 'commentsManagement', ['success' => 'Commentaire supprimé.']);
     }
 
+    /**
+     * Génère la vue détaillant un commentaire
+     * @return void
+     */
     public function showComment()
     {
         if(!$this->request->existsParam('id'))
@@ -454,8 +512,9 @@ class ControllerAdmin extends ControllerSecured
     //======================== Utilitaires ======================
 
     /**
+     * Télécharger un fichier dans le dossier /assets/img/posts/
      * @param $file
-     * @return string|string[]
+     * @return string|string[] Le nom du fichier est cas de succès. Un tableau avec un message d'erreur en cas d'échec.
      */
     private function uploadFile($file)
     {
@@ -488,6 +547,7 @@ class ControllerAdmin extends ControllerSecured
     }
 
     /**
+     * Supprimer un fichier du serveur
      * @param string $filename Nom du fichier à supprimer dans le dossier ./assets/img/posts/
      * @return bool
      */

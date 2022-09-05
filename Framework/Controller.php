@@ -7,13 +7,20 @@ abstract class Controller
     private $action;
     protected Request $request;
 
+    /**
+     * Initialise la requête
+     * @param Request $request
+     * @return void
+     */
     public function setRequest(Request $request)
     {
         $this->request = $request;
     }
 
     /**
+     * Exécute l'action passée en paramètre du Controller
      * @throws \Exception
+     * @return void
      */
     public function executeAction($action)
     {
@@ -27,6 +34,10 @@ abstract class Controller
         }
     }
 
+    /**
+     * Génère la vue principale
+     * @return mixed
+     */
     public abstract function index();
 
     protected function generateView($dataView = [])
@@ -50,13 +61,15 @@ abstract class Controller
     }
 
     /**
-     * @param string $controller Must be empty for ControllerHome
-     * @param null $action
-     * @param array $messages
-     * @param int|null $id
+     * Redirige vers une autre page
+     * @param string $controller Controller à utiliser
+     * @param null $action Action à exécuter
+     * @param array $messages Messages à afficher
+     * @param int|null $id Identifiant spécifique pour un article, utilisateurs, etc.
      * @return void
+     * @throws \Exception
      */
-    protected function redirect(string $controller = '', $action = null, $messages = [], int $id = null)
+    protected function redirect(string $controller = '', $action = null, array $messages = [], int $id = null)
     {
         if(!empty($messages['error'])) {
             $this->request->getSession()->setAttribute('error_message', $messages['error']);

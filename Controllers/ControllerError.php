@@ -6,6 +6,10 @@ use Texier\Framework\Controller;
 class ControllerError extends Controller
 {
 
+    /**
+     * Génère la vue Erreur
+     * @return void
+     */
     public function index()
     {
         if($this->request->existsParam('id')) {

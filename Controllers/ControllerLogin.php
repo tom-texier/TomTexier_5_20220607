@@ -8,11 +8,18 @@ class ControllerLogin extends Controller
 {
     private UsersManager $usersManager;
 
+    /**
+     * Constructeur de classe
+     */
     public function __construct()
     {
         $this->usersManager = new UsersManager();
     }
 
+    /**
+     * Génère la page Connexion ou redirige si un utilisateur est connecté.
+     * @return void
+     */
     public function index()
     {
         if($this->request->getSession()->existsAttribute('userID')) {
@@ -22,6 +29,10 @@ class ControllerLogin extends Controller
         $this->generateView();
     }
 
+    /**
+     * Tente de connecter un utilisateur
+     * @return void
+     */
     public function login()
     {
         if($this->request->existsParam('email') && $this->request->existsParam('password'))
@@ -55,6 +66,10 @@ class ControllerLogin extends Controller
         }
     }
 
+    /**
+     * Déconnecte l'utilisateur actif
+     * @return void
+     */
     public function logout()
     {
         $this->request->getSession()->destroy();

@@ -4,13 +4,28 @@ namespace Texier\Framework;
 
 class Configuration
 {
+    /**
+     * @var array $params
+     */
     private static $params;
 
-    public static function get($name, $defaultValue = null)
+    /**
+     * Récupère un paramètre de configuration du fichier /config/*.ini
+     * @param string $name Nom du paramètre à récupérer
+     * @param string|null $defaultValue Valeur par défaut à retourner si le paramètre n'est pas trouvé
+     * @return mixed|null
+     * @throws \Exception
+     */
+    public static function get(string $name, string $defaultValue = null)
     {
         return self::getParams()[$name] ?? $defaultValue;
     }
 
+    /**
+     * Transform les paramètres de configuration du fichier .ini en tableau
+     * @return array|false
+     * @throws \Exception
+     */
     private static function getParams()
     {
         if(self::$params === null) {

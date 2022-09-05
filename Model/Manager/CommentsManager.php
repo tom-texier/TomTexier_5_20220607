@@ -7,6 +7,12 @@ use Texier\Framework\Model;
 
 class CommentsManager extends Model
 {
+    /**
+     * Retourne la liste des commentaires pour un article
+     * @param int $postId
+     * @return Comment[]
+     * @throws \Exception
+     */
     public function getListByPostId(int $postId): array
     {
         $sql = "SELECT *
@@ -28,6 +34,11 @@ class CommentsManager extends Model
         return $comments;
     }
 
+    /**
+     * Retourne la liste de tous les commentaires
+     * @return Comment[]
+     * @throws \Exception
+     */
     public function getList(): array
     {
         $sql = "SELECT *
@@ -45,8 +56,10 @@ class CommentsManager extends Model
     }
 
     /**
+     * Retourne un commentaire
      * @param int $commentId
      * @return Comment|false
+     * @throws \Exception
      */
     public function get(int $commentId)
     {
@@ -63,6 +76,12 @@ class CommentsManager extends Model
         return false;
     }
 
+    /**
+     * Ajoute un nouveau commentaire
+     * @param Comment $comment
+     * @return false|\PDOStatement
+     * @throws \Exception
+     */
     public function add(Comment $comment)
     {
         $sql = "INSERT INTO comments (author, post, content, createdAt, status) VALUES (:authorId, :postId, :content, :createdAt, :status)";
@@ -76,6 +95,12 @@ class CommentsManager extends Model
         ]);
     }
 
+    /**
+     * Supprime un commentaire
+     * @param int $commentId
+     * @return false|\PDOStatement
+     * @throws \Exception
+     */
     public function delete(int $commentId)
     {
         $sql = "DELETE FROM comments WHERE id = ?";
@@ -83,6 +108,12 @@ class CommentsManager extends Model
         return $this->executeRequest($sql, [$commentId]);
     }
 
+    /**
+     * Passe le status du commentaire à Validé
+     * @param int $commentId
+     * @return false|\PDOStatement
+     * @throws \Exception
+     */
     public function validate(int $commentId)
     {
         $sql = "UPDATE comments
@@ -95,6 +126,12 @@ class CommentsManager extends Model
         ]);
     }
 
+    /**
+     * Passe le status du commentaire à Désactivé
+     * @param int $commentId
+     * @return false|\PDOStatement
+     * @throws \Exception
+     */
     public function disable(int $commentId)
     {
         $sql = "UPDATE comments
@@ -107,6 +144,11 @@ class CommentsManager extends Model
         ]);
     }
 
+    /**
+     * Retourne le nombre de commentaires
+     * @return mixed
+     * @throws \Exception
+     */
     public function count()
     {
         $sql = "SELECT COUNT(*) as numberComments FROM comments";

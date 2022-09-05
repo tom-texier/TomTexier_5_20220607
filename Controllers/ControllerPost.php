@@ -10,12 +10,19 @@ class ControllerPost extends Controller
     private PostsManager $postsManager;
     private CommentsManager $commentsManager;
 
+    /**
+     * Constructeur de classe
+     */
     public function __construct()
     {
         $this->postsManager = new PostsManager();
         $this->commentsManager = new CommentsManager();
     }
 
+    /**
+     * Génère la page d'un article
+     * @return void
+     */
     public function index()
     {
         if(!$this->request->existsParam('id'))
@@ -36,6 +43,10 @@ class ControllerPost extends Controller
         ]);
     }
 
+    /**
+     * Ajouter un commentaire
+     * @return void
+     */
     public function addComment()
     {
         if(!$this->request->existsParam('id'))

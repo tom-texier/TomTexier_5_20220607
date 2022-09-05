@@ -2,10 +2,10 @@
 -- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Aug 26, 2022 at 02:14 PM
--- Server version: 5.7.34
--- PHP Version: 7.4.21
+-- Hôte : localhost:8889
+-- Généré le : lun. 05 sep. 2022 à 12:30
+-- Version du serveur :  5.7.34
+-- Version de PHP : 7.4.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `oc_blog_mvc`
+-- Base de données : `oc_blog_mvc`
 --
 CREATE DATABASE IF NOT EXISTS `oc_blog_mvc` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `oc_blog_mvc`;
@@ -26,7 +26,7 @@ USE `oc_blog_mvc`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Structure de la table `comments`
 --
 
 DROP TABLE IF EXISTS `comments`;
@@ -39,17 +39,10 @@ CREATE TABLE `comments` (
   `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`id`, `author`, `post`, `content`, `createdAt`, `status`) VALUES
-(13, 22, 4, 'Un commentaire', '2022-08-26 11:18:28', 1);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Structure de la table `posts`
 --
 
 DROP TABLE IF EXISTS `posts`;
@@ -63,17 +56,10 @@ CREATE TABLE `posts` (
   `updatedAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`id`, `author`, `title`, `content`, `image`, `createdAt`, `updatedAt`) VALUES
-(4, 22, 'Le pantalon de l\'année !', 'Un super pantalon.', 'post-63088a0caec717.99965321.jpg', '2022-08-26 10:53:32', '2022-08-26 10:53:47');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Structure de la table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -87,18 +73,20 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `users`
+-- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `createdAt`) VALUES
-(22, 'admin', 'admin@admin.fr', '$2y$10$lfpbscjd.TDVOVo12fUvZO3dl55Cn4Dbn3UfO5GEb6EdzAi/.RmRa', 2, '2022-08-26 10:37:21');
+(22, 'admin', 'admin@admin.fr', '$2y$10$lfpbscjd.TDVOVo12fUvZO3dl55Cn4Dbn3UfO5GEb6EdzAi/.RmRa', 2, '2022-08-26 10:37:21'),
+(23, 'ttexier', 'tom.texier49@gmail.com', '$2y$10$rZTtXfgDJRZB1qZMDYuWBukWzGXxFV99psvKNPN7CHeHLjebbEST2', 1, '2022-08-29 11:00:11'),
+(24, 'test', 'test@test.fr', '$2y$10$.JrVpyawTWzg13u9dCStM.2EzHHd7w95jGTF42yZ6AaMRIs8C/vYy', 1, '2022-08-29 12:25:07');
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `comments`
+-- Index pour la table `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
@@ -106,14 +94,14 @@ ALTER TABLE `comments`
   ADD KEY `FK_COMMENTS_USERS` (`author`);
 
 --
--- Indexes for table `posts`
+-- Index pour la table `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_POSTS_USERS` (`author`);
 
 --
--- Indexes for table `users`
+-- Index pour la table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -121,40 +109,40 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT pour la table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `posts`
+-- AUTO_INCREMENT pour la table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- Constraints for table `comments`
+-- Contraintes pour la table `comments`
 --
 ALTER TABLE `comments`
   ADD CONSTRAINT `FK_COMMENTS_POSTS` FOREIGN KEY (`post`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_COMMENTS_USERS` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `posts`
+-- Contraintes pour la table `posts`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `FK_POSTS_USERS` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;

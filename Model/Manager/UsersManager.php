@@ -8,6 +8,11 @@ use Texier\Framework\Model;
 
 class UsersManager extends Model
 {
+    /**
+     * Retourne la liste de tous les utilisateurs
+     * @return User[]
+     * @throws \Exception
+     */
     public function getList(): array
     {
         $sql = "SELECT id, username, email, role, createdAt
@@ -25,8 +30,10 @@ class UsersManager extends Model
     }
 
     /**
-     * @param int|string $id id, email or username of User
+     * Retourne un utilisateur par son ID, son email ou son nom d'utilisateur
+     * @param int|string $id Id, email ou nom d'utilisateur
      * @return User|false
+     * @throws \Exception
      */
     public function get($id)
     {
@@ -48,6 +55,12 @@ class UsersManager extends Model
         return false;
     }
 
+    /**
+     * Ajouter un utilisateur
+     * @param User $user
+     * @return false|\PDOStatement|string[]
+     * @throws \Exception
+     */
     public function add(User $user)
     {
         if ($result = $this->userExist($user)) {
@@ -65,6 +78,12 @@ class UsersManager extends Model
         ]);
     }
 
+    /**
+     * Supprimer un utilisateur
+     * @param int $id
+     * @return false|\PDOStatement
+     * @throws \Exception
+     */
     public function delete(int $id)
     {
         $sql = "DELETE FROM users WHERE id = ?";
@@ -72,6 +91,12 @@ class UsersManager extends Model
         return $this->executeRequest($sql, [$id]);
     }
 
+    /**
+     * Mettre à jour un utilisateur
+     * @param User $user
+     * @return false|\PDOStatement|string[]
+     * @throws \Exception
+     */
     public function update(User $user)
     {
         if ($result = $this->userExist($user, true)) {
@@ -92,9 +117,11 @@ class UsersManager extends Model
     }
 
     /**
+     * Vérifie si l'utilisateur existe et qu'il renseigne les bons identifiants
      * @param $email
      * @param $password
      * @return bool
+     * @throws \Exception
      */
     public function login($email, $password): bool
     {
@@ -108,6 +135,11 @@ class UsersManager extends Model
         return false;
     }
 
+    /**
+     * Retourne le nombre d'utilisateurs
+     * @return mixed
+     * @throws \Exception
+     */
     public function count()
     {
         $sql = "SELECT COUNT(*) as numberUsers FROM users";
@@ -116,6 +148,13 @@ class UsersManager extends Model
         return $result['numberUsers'];
     }
 
+    /**
+     * Détermine si un utilisateur existe
+     * @param User $user Utilisateur à tester
+     * @param bool $strict Indiquer faux pour vérifier seulement l'email et le nom d'utilisateur. Vrai pour vérifier en excluant l'identifiant.
+     * @return false|string[]
+     * @throws \Exception
+     */
     private function userExist(User $user, bool $strict = false)
     {
         if ($strict) {
