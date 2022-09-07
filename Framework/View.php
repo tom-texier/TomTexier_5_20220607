@@ -6,6 +6,7 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 class View
@@ -50,6 +51,7 @@ class View
     public function generate(array $data)
     {
         $this->twig->addGlobal('session', $_SESSION);
+        $this->twig->addGlobal('base_url', Configuration::get('rootWeb'));
         $this->twig->display($this->file, $data);
     }
 }

@@ -16,7 +16,7 @@
     </div>
     {% endif %}
 
-    <form method="post" action="/admin/editUser/{{ user.id }}" class="form-action" enctype="multipart/form-data">
+    <form method="post" action="{{ base_url }}admin/editUser/{{ user.id }}" class="form-action">
         <div class="form-content">
             <div class="form-group form-group__text">
                 <label for="username">Nom d'utilisateur<span class="required">*</span></label>

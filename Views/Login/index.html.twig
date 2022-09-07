@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container">
-    <form id="form-login" class="form-action" method="POST" action="/login/login">
+    <form id="form-login" class="form-action" method="POST" action="{{ base_url }}login/login">
         {% if success_message %}
             <div class="notice notice__success">
                 {{ success_message }}
@@ -28,7 +28,7 @@
             <div class="form-group form-group__submit">
                 <input type="submit" class="submit" value="Se connecter">
             </div>
-            <a href="/inscription">Je n'ai pas de compte ! S'inscrire</a>
+            <a href="{{ base_url }}inscription">Je n'ai pas de compte ! S'inscrire</a>
         </div>
     </form>
 </div>

@@ -16,12 +16,12 @@
         </div>
         <div class="group group__actions">
             {% if comment.status == 1 %}
-                <a href="/admin/validateComment/{{ comment.id }}" title="Valider le commentaire" class="group__actions__link group__actions__link--validate"><i class="fas fa-check"></i> Valider le commentaire</a>
+                <a href="{{ base_url }}admin/validateComment/{{ comment.id }}" title="Valider le commentaire" class="group__actions__link group__actions__link--validate"><i class="fas fa-check"></i> Valider le commentaire</a>
             {% else %}
-                <a href="/admin/disableComment/{{ comment.id }}" title="Désactiver le commentaire" class="group__actions__link group__actions__link--disable"><i class="fas fa-times"></i> Désactiver le commentaire</a>
+                <a href="{{ base_url }}admin/disableComment/{{ comment.id }}" title="Désactiver le commentaire" class="group__actions__link group__actions__link--disable"><i class="fas fa-times"></i> Désactiver le commentaire</a>
             {% endif %}
-            <a href="/admin/deleteComment/{{ comment.id }}" title="Supprimer le commentaire" class="group__actions__link group__actions__link--delete" data-confirm="true"><i class="fas fa-trash-alt"></i> Supprimer le commentaire</a>
-            <a href="/article/{{ comment.post.id }}" title="Voir l'article" target="_blank" class="group__actions__link group__actions__link--show"><i class="fas fa-eye"></i> Voir l'article</a>
+            <a href="{{ base_url }}admin/deleteComment/{{ comment.id }}" title="Supprimer le commentaire" class="group__actions__link group__actions__link--delete" data-confirm="true"><i class="fas fa-trash-alt"></i> Supprimer le commentaire</a>
+            <a href="{{ base_url }}article/{{ comment.post.id }}" title="Voir l'article" target="_blank" class="group__actions__link group__actions__link--show"><i class="fas fa-eye"></i> Voir l'article</a>
         </div>
         <div class="group group__info">
             Publié le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i') }}

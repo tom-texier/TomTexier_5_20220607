@@ -49,7 +49,7 @@ class ControllerContact extends Controller
         $to = Configuration::get('contact_email');
         $from = Configuration::get('noreply_email');
         $subject = "Vous avez un nouveau message de votre blog";
-        $body = file_get_contents(Configuration::get('rootPath') . 'public/templates/email.html');
+        $body = file_get_contents(Configuration::get('rootWeb') . 'public/templates/email.html');
         $body = str_replace(
             [ '[[LASTNAME]]', '[[FIRSTNAME]]', '[[EMAIL]]', '[[MESSAGE]]' ],
             [ $lastname, $firstname, $email, $message ],

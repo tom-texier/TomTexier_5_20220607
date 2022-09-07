@@ -10,15 +10,15 @@
 
     <title>{% block title %}Accueil{% endblock %} - Mon blog</title>
 
-    <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/assets/css/blog_php.css">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="{{ base_url }}assets/css/blog_php.css">
 </head>
 <body class="preload {% block class_body %}{% endblock %}">
     <header id="main-header">
         <div class="container">
             <div class="left">
-                <h1><a href="/">Tom Texier</a></h1>
-                <h2><a href="/">Le développeur qu'il vous faut !</a></h2>
+                <h1><a href="{{ base_url }}">Tom Texier</a></h1>
+                <h2><a href="{{ base_url }}">Le développeur qu'il vous faut !</a></h2>
             </div>
             <div class="right">
                 <div class="toggleMenu" id="toggleMenu">
@@ -30,25 +30,25 @@
         <nav id="sideMenu">
             <div class="close">&times;</div>
             <ul class="main-menu">
-                <li><a href="/">Accueil</a></li>
-                <li><a href="/articles/">Mes articles</a></li>
-                <li><a href="/contactez-moi/">Contactez-moi</a></li>
+                <li><a href="{{ base_url }}">Accueil</a></li>
+                <li><a href="{{ base_url }}articles">Mes articles</a></li>
+                <li><a href="{{ base_url }}contactez-moi">Contactez-moi</a></li>
             </ul>
 
             <div class="login-menu">
                 {% if not session.userID %}
-                    <a class="button button--login" href="/connexion/">Connexion <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+                    <a class="button button--login" href="{{ base_url }}connexion">Connexion <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
                 {% else %}
                     <div class="logged-user"><i class="fa-solid fa-user"></i> {{ session.userEmail }}</div>
                     {% if session.userRole == 2 %}
                         <ul>
-                            <li><a href="/admin/"><i class="fas fa-columns"></i> Console d'administration</a></li>
-                            <li><a href="/admin/postsManagement/"><i class="fa-solid fa-newspaper"></i> Gérer les articles</a></li>
-                            <li><a href="/admin/commentsManagement/"><i class="fa-solid fa-comments"></i> Gérer les commentaires</a></li>
-                            <li><a href="/admin/usersManagement/"><i class="fa-solid fa-users"></i> Gérer les utilisateurs</a></li>
+                            <li><a href="{{ base_url }}admin"><i class="fas fa-columns"></i> Console d'administration</a></li>
+                            <li><a href="{{ base_url }}admin/postsManagement"><i class="fa-solid fa-newspaper"></i> Gérer les articles</a></li>
+                            <li><a href="{{ base_url }}admin/commentsManagement"><i class="fa-solid fa-comments"></i> Gérer les commentaires</a></li>
+                            <li><a href="{{ base_url }}admin/usersManagement"><i class="fa-solid fa-users"></i> Gérer les utilisateurs</a></li>
                         </ul>
                     {% endif %}
-                    <a class="button button--logout" href="/deconnexion">Déconnexion <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                    <a class="button button--logout" href="{{ base_url }}deconnexion">Déconnexion <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
                 {% endif %}
             </div>
         </nav>
@@ -68,10 +68,10 @@
                 <div class="col links">
                     <h3>Liens utiles</h3>
                     <ul>
-                        <li><a href="/">Accueil</a></li>
-                        <li><a href="/articles/">Mes articles</a></li>
-                        <li><a href="/contactez-moi/">Contact</a></li>
-                        <li><a href="/admin/" target="_blank">Console d'administration</a></li>
+                        <li><a href="{{ base_url }}">Accueil</a></li>
+                        <li><a href="{{ base_url }}articles">Mes articles</a></li>
+                        <li><a href="{{ base_url }}contactez-moi">Contact</a></li>
+                        <li><a href="{{ base_url }}admin" target="_blank">Console d'administration</a></li>
                     </ul>
                 </div>
                 <div class="col rs">
@@ -87,6 +87,6 @@
         </div>
     </footer>
 
-    <script src="/assets/js/blog_php.js"></script>
+    <script src="{{ base_url }}assets/js/blog_php.js"></script>
 </body>
 </html>

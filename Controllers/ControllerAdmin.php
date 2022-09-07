@@ -26,6 +26,7 @@ class ControllerAdmin extends ControllerSecured
     /**
      * Génère la vue du Tableau de bord
      * @return void
+     * @throws Exception
      */
     public function index()
     {

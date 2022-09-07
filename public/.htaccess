@@ -1,15 +1,17 @@
 Options +FollowSymLinks
 RewriteEngine On
 
+RewriteBase /TomTexier_5_20220607
+
 ErrorDocument 404 /error/404
 
 # FRONT REWRITING
-RewriteRule ^articles/?$ posts/
+RewriteRule ^articles/?$ posts
 RewriteRule ^article/([a-zA-Z0-9]*)/?$ post/$1 [NC,L]
-RewriteRule ^contactez-moi/?$ contact/
-RewriteRule ^connexion/?$ login/
-RewriteRule ^inscription/?$ registration/
-RewriteRule ^deconnexion/?$ login/logout/
+RewriteRule ^contactez-moi/?$ contact
+RewriteRule ^connexion/?$ login
+RewriteRule ^inscription/?$ registration
+RewriteRule ^deconnexion/?$ login/logout
 
 # Réécrit une URL de type xxx/yyy/zzz en index.php?controller=xxx&action=yyy&id=zzz
 RewriteRule ^([a-zA-Z]*)/?([a-zA-Z]*)?/?([a-zA-Z0-9]*)?/?$ index.php?controller=$1&action=$2&id=$3 [NC,L]

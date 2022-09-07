@@ -10,8 +10,8 @@
                 <div class="grid">
                     {% for post in posts %}
                         <article>
-                            <a href="/article/{{ post.id }}">
-                                <img src="/assets/img/posts/{{ post.image }}" alt="{{ post.title }}">
+                            <a href="{{ base_url }}article/{{ post.id }}">
+                                <img src="{{ base_url }}assets/img/posts/{{ post.image }}" alt="{{ post.title }}">
                                 <div class="content">
                                     <div class="left">
                                         <p class="date">{{ post.createdAt | date("d/m/Y") }}</p>

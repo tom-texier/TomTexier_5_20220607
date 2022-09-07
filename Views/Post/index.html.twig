@@ -21,7 +21,7 @@
     {% endif %}
     <section class="article">
         <div class="container">
-            <img src="/assets/img/posts/{{ post.image }}" alt="{{ post.title }}" class="article__thumbnail">
+            <img src="{{ base_url }}assets/img/posts/{{ post.image }}" alt="{{ post.title }}" class="article__thumbnail">
             <div class="article__metas">
                 <small class="article__author">
                     <i class="far fa-user"></i> Publié par <i>{{ post.author.username }}</i></small>
@@ -42,7 +42,7 @@
         <div class="container">
             <h2>Ajouter un commentaire</h2>
             {% if session.userID %}
-                <form action="/post/addComment/{{ post.id }}" class="form-action" method="post">
+                <form action="{{ base_url }}post/addComment/{{ post.id }}" class="form-action" method="post">
                     <div class="form-content">
                         <div class="form-group">
                             <label for="content">Contenu<span class="required">*</span></label>

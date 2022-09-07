@@ -11,7 +11,7 @@
         </div>
     {% endif %}
 
-    <form method="post" action="/admin/addPost" class="form-action" enctype="multipart/form-data">
+    <form method="post" action="{{ base_url }}admin/addPost" class="form-action" enctype="multipart/form-data">
         <div class="form-content">
             <div class="form-group form-group__title">
                 <label for="title">Titre<span class="required">*</span></label>

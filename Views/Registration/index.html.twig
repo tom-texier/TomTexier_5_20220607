@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container">
-    <form id="form-registration" class="form-action" method="POST" action="/registration/register">
+    <form id="form-registration" class="form-action" method="POST" action="{{ base_url }}registration/register">
         {% if error_message %}
             <div class="notice notice__error">
                 {{ error_message }}
@@ -31,7 +31,7 @@
             <div class="form-group form-group__submit">
                 <input type="submit" class="submit" value="S'inscrire">
             </div>
-            <a href="/connexion/">J'ai déjà un compte ! Se connecter</a>
+            <a href="{{ base_url }}connexion">J'ai déjà un compte ! Se connecter</a>
         </div>
     </form>
 </div>
